@@ -28,12 +28,8 @@ def data_transmission(data: Data):
 
 @router.get("/order/{order_id}")
 def read_order(order_id: int):
-    """
-    route permettant de lire une commande avec son identifiant
-
-    :param order_id: identifiant de la commande
-    """
-    return {"message": "Welcome to the API"}
+    result = data_instance.order_CRUD(data_instance, "READ", None, order_id)
+    return {"Lecture Commande", result}
 
 
 @router.post("/order")

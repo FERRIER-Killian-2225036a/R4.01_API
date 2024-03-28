@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from data_access.CreateData import Data
+from data_access.Data import Data
 from dishes_and_users.model_types.Dish import Dish
 
 router = APIRouter()
