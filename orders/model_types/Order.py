@@ -1,4 +1,8 @@
-from pydantic import BaseModel
+"""
+Classe représentant une commande
+
+"""
+
 from model_types.Localisation import *
 from datetime import datetime
 
@@ -10,3 +14,4 @@ class Order(BaseModel):
     localisation: Localisation
     price: float
     date: datetime
+

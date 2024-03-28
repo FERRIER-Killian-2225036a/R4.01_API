@@ -1,7 +1,7 @@
 import uvicorn
 from core.config import HOST, PORT
 from API_controller.General_Controller import General_Controller
-from data_access.Data import Data
+from data_access.CreateData import Data
 
 if __name__ == "__main__":
     data = Data()
