@@ -1,8 +1,7 @@
-from data_access.Singleton import Singleton
-from core.config import FICHIER_SAUVEGARDE
 import sqlite3
-
-from model_types.Order import Order
+from orders.data_access.Singleton import Singleton
+from orders.core.config import FICHIER_SAUVEGARDE
+from orders.model_types.Order import Order
 
 
 class Data(metaclass=Singleton):
@@ -11,13 +10,11 @@ class Data(metaclass=Singleton):
 
     def __init__(self, file_path=FICHIER_SAUVEGARDE):
         self.file_path = file_path
-        self.data_access = sqlite3.connect(self.file_path)
+        self.data_access = sqlite3.connect(self.file_path,check_same_thread=False)
 
         # Verification tables existent
         if not self.tables_exist() :
             self.create_tables()
-
-
 
     def tables_exist(self):
         cursor = self.data_access.cursor()

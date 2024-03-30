@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from API_controller.API import API_Dishes, API_Users
+from API_controller.API import API_Dishes, API_Users, API_Utils
 from data_access.Data import Data
 
 
@@ -31,6 +31,8 @@ class General_Controller:
         print(" - Routes de API_Dishes configurées.")
         API_Users.setup_routes(cls.app)
         print(" - Routes de API_Users configurées.")
+        API_Utils.setup_routes(cls.app)
+        print(" - Routes de Api_Utils configurées.")
 
     def data_transmission(self):
         """
@@ -39,9 +41,11 @@ class General_Controller:
         :return:
         """
         API_Dishes.data_transmission(self.data)
-        print(" - Données transmises à API_Dishes")
+        print(" - Données transmises à API_Dishes.")
         API_Users.data_transmission(self.data)
-        print(" - Données transmises à API_Dishes")
+        print(" - Données transmises à API_Users.")
+        API_Utils.data_transmission(self.data)
+        print(" - Données transmises à API_Utils.")
 
 
     def getApp(self):

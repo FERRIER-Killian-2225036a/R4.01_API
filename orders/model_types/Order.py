@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from model_types.Localisation import *
+from orders.model_types.Localisation import Localisation
 from datetime import datetime
 
 
