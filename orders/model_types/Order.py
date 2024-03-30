@@ -1,3 +1,8 @@
+"""
+Classe représentant une commande
+
+"""
+
 from pydantic import BaseModel
 from orders.model_types.Localisation import Localisation
 from datetime import datetime
@@ -10,3 +15,4 @@ class Order(BaseModel):
     localisation: Localisation
     price: float
     date: datetime
+

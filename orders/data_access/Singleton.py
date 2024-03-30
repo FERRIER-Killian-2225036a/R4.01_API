@@ -1,3 +1,7 @@
+"""
+Classe représentant un singleton
+
+"""
 class Singleton(type):
     """
     Classe implémentant le design pattern singleton pour la base de donnée notamment
