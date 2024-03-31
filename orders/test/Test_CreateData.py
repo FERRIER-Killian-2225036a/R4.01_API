@@ -1,26 +1,31 @@
 """
 Fichier permettant de tester la création des données
-"""
-import os
-import unittest
-import sqlite3
-from data_access.CreateData import CreateData
 
-# BD de test
-DATABASE_PATH = "test_database.db"
+"""
+import unittest
+from data_access.Data import Data
+from core.config import FICHIER_SAUVEGARDE
+
 
 class TestCreateData(unittest.TestCase):
-    def setUp(self):
-        os.remove(DATABASE_PATH)
-        self.connection = sqlite3.connect(DATABASE_PATH)
-        self.create_data = CreateData(self.connection)
-
-    def tearDown(self):
-        self.connection.close()
+    @classmethod
+    def setUpClass(cls):
+        cls.connection = Data(FICHIER_SAUVEGARDE)
 
     def test_create_tables(self):
-        #Vérification tables créées (dans constructeur)
-        self.assertTrue(self.create_data.tables_exist())
+        """
+        Test unitaire : vérification que les tables sont créées
+        """
+        self.assertTrue(self.connection.createData.tables_exist())
+
+    def test_table_localisation_exist(self):
+        """
+        Test unitaire : vérification que la table localisation existe
+        """
+        cursor = self.connection.data_access.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Localisation';")
+        self.assertIsNotNone(cursor.fetchone())
+
 
 if __name__ == '__main__':
     unittest.main()
