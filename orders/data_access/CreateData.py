@@ -17,17 +17,13 @@ class CreateData(metaclass=Singleton):
     def __init__(self, data_a:sqlite3.Connection):
         self.data_access = data_a
 
-        # Verification tables existent
-        if not self.tables_exist() :
-            self.create_tables()
-
     def tables_exist(self):
         """
         methode permettant de verifier si les tables existent
 
         """
         cursor = self.data_access.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='ORDER'")
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Localisation';")
         return cursor.fetchone() is None
 
     def create_tables(self):

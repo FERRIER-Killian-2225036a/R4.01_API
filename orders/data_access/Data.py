@@ -14,26 +14,27 @@ from model_types.Order import Order
 class Data(metaclass=Singleton):
     file_path: str
     data_access: sqlite3.Connection
-    createData : CreateData
-
+    createData: CreateData
 
     def __init__(self, file_path=FICHIER_SAUVEGARDE):
         self.file_path = file_path
-        self.data_access = sqlite3.connect(self.file_path, check_same_thread=False)
+        self.data_access = sqlite3.connect('file:' + self.file_path, uri=True,
+                                           detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
         self.createData = CreateData(self.data_access)
 
         # Verification tables existent
         if not self.createData.tables_exist():
             self.createData.create_tables()
 
-    def localisation_CRUD(self, method: str, object=None | Order, object_id=None | int) -> Localisation | None:
+    def localisation_CRUD(self, method: str, object=None | Localisation, object_id=None | int) -> Localisation | None:
         """
         methodes du CRUD pour la table Localisation
 
         :return: La localisation en question
 
         """
-        def create_localisation(localisation: Localisation, loc_id:int):
+
+        def create_localisation(localisation: Localisation, loc_id: int):
             """
             methodes permettant d'ajouter une localisation dans la table Localisation
 
@@ -93,7 +94,7 @@ class Data(metaclass=Singleton):
             case "CREATE":
                 if object is None:
                     raise ValueError("Erreur lors création localisation (objet null)")
-                if isinstance(object, Order):
+                if isinstance(object, Localisation):
                     return create_localisation(object, object_id)
                 else:
                     raise ValueError("Erreur : mauvais type fournis en paramètre pour la localisation")
@@ -107,7 +108,7 @@ class Data(metaclass=Singleton):
                     raise ValueError("Erreur lors modification localisation (objet null)")
                 if object_id is None:
                     raise ValueError("Erreur lors modification localisation (id null)")
-                if isinstance(object, Order):
+                if isinstance(object, Localisation):
                     return update_localisation(object_id, object)
                 else:
                     raise ValueError("Erreur : mauvais type fournis en paramètre pour la localisation")
@@ -117,14 +118,15 @@ class Data(metaclass=Singleton):
                 else:
                     return delete_localisation(object_id)
 
-    def menusOfOrder_CRUD(self, method: str, object=(int, int, int), object_id=None | int) -> int|list[int]|None:
+    def menusOfOrder_CRUD(self, method: str, object=(int, int, int), object_id=None | int) -> int | list[int] | None:
         """
         methodes du CRUD pour la table MenusOfOrder
 
         :return: L'id de la commande en question
 
         """
-        def create_menusOfOrder(object:(int, int, int)) -> int:
+
+        def create_menusOfOrder(object: (int, int, int)) -> int:
             """
             methodes permettant d'ajouter un menu dans la table menusOfOrder
 
@@ -137,7 +139,7 @@ class Data(metaclass=Singleton):
             self.data_access.commit()
             return object[0]
 
-        def read_menusOfOrder(object_id : int) -> list[int]:
+        def read_menusOfOrder(object_id: int) -> list[int]:
             """
             methodes permettant de lire les menus d'une commande
 
@@ -150,8 +152,7 @@ class Data(metaclass=Singleton):
             menu_ids = [row[0] for row in self.data_access.cursor.fetchall()]
             return menu_ids
 
-
-        def delete_menusOfOrder(object_id:int):
+        def delete_menusOfOrder(object_id: int):
             """
             methodes permettant de supprimer les menus d'une commande
 
@@ -184,6 +185,7 @@ class Data(metaclass=Singleton):
         methodes du CRUD pour la table Order
 
         """
+
         def create_order(order: Order) -> Order:
             """
             methodes permettant d'ajouter une commande dans la table Order
@@ -194,15 +196,16 @@ class Data(metaclass=Singleton):
                                            order.price, order.date))
             # Récupération de l'ID de la commande insérée
             order_id = self.data_access.cursor.lastrowid
+            order.command_id = order_id
             # Creation localisation
             self.localisation_CRUD(self, "CREATE", order.localisation, order_id)
             # Creation d'un tuple pour chaque valeur de menus_id
             for menu_id in order.menus_id:
-                self.menusOfOrder_CRUD(self, "CREATE", (order_id, menu_id,1), None)
+                self.menusOfOrder_CRUD(self, "CREATE", (order_id, menu_id, 1), None)
             self.data_access.commit()
             return order
 
-        def read_order(object_id:int) -> Order:
+        def read_order(object_id: int) -> Order:
             """
             methodes permettant de lire une commande dans la table Order
 
@@ -213,26 +216,27 @@ class Data(metaclass=Singleton):
                 raise ValueError("Impossible de lire la commande n" + object_id)
             read_menus_id = self.menusOfOrder_CRUD(self, "READ", None, object_id)
             read_localisation = self.localisation_CRUD(self, "READ", None, object_id)
-            return Order(command_id=object_id, menus_id=read_menus_id, user_id=order_read[0], localisation=read_localisation, price=order_read[1], date=order_read[2])
+            return Order(command_id=object_id, menus_id=read_menus_id, user_id=order_read[0],
+                         localisation=read_localisation, price=order_read[1], date=order_read[2])
 
-        def update_order(object_id:int, order: Order):
+        def update_order(object_id: int, order: Order):
             """
             methodes permettant de mettre à jour une commande dans la table Order
 
             """
             sql = "ALTER TABLE Orders SET user_id=?, localisation_id=?, price=?, date=?) WHERE command_id=?;"
             self.data_access.execute(sql, (order.user_id, order.localisation.localisation_id,
-                                           order.price, order.date,object_id))
+                                           order.price, order.date, object_id))
             self.data_access.commit()
             return order
 
-        def delete_order(object_id:int):
+        def delete_order(object_id: int):
             """
             methodes permettant de supprimer une commande dans la table Order
 
             """
             # Suppression menus
-            self.menusOfOrder_CRUD(self,"DELETE", None, object_id)
+            self.menusOfOrder_CRUD(self, "DELETE", None, object_id)
             # Suppression commande
             sql = "DELETE FROM Orders WHERE command_id = ?;"
             self.data_access.execute(sql, object_id)
