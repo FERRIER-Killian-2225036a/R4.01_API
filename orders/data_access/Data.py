@@ -237,32 +237,3 @@ class Data(metaclass=Singleton):
             # Suppression localisation
             self.localisation_CRUD(self, "DELETE", None, object_id)
             return None
-
-        match method:
-            case "CREATE":
-                if object is None:
-                    raise ValueError("Erreur lors création commande (objet null)")
-                if isinstance(object, Order):
-                    return create_order(object)
-                else:
-                    raise ValueError("Erreur : mauvais type fournis en paramètre")
-            case "READ":
-                if object_id is None:
-                    raise ValueError("Erreur lors lecture commande (id null)")
-                else:
-                    return read_order(object_id)
-            case "UPDATE":
-                if object_id is None:
-                    raise ValueError("Erreur lors modification commande (id null)")
-                if object is None:
-                    raise ValueError("Erreur lors modification commande (objet null)")
-                if isinstance(object, Order):
-                    return update_order(object_id, object)
-                else:
-                    raise ValueError("Erreur : mauvais type fournis en paramètre")
-            case "DELETE":
-                if object_id is None:
-                    raise ValueError("Erreur lors modification commande (id null)")
-                else:
-                    return delete_order(object_id)
-

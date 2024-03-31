@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from data_access.Data import Data
 from dishes_and_users.model_types.Dish import Dish
@@ -23,11 +23,37 @@ def data_transmission(data: Data):
         data_instance = data
 
 
-@router.get("/")
-def read_root():
-    return {"message": "Welcome to the API"}
+@router.post("/Dish")
+def create_user(dish: Dish):
+    try:
+        data_instance.ORM("CREATE", Dish.__name__.upper(), object_instance=dish)
+        return {"message": "dish created with success"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
 
 
-@router.post("/")
-def root(dish: Dish) -> Dish:
-    return dish
+@router.get("/Dish/{id}")
+def get_user(id: int):
+    try:
+        dish = data_instance.ORM("READ", Dish.__name__.upper(), object_id=id)
+        return {"message": "dish readed with success", "dish": dish}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
+
+
+@router.put("/Dish/{id}")
+def update_user(id: int, dish: Dish):
+    try:
+        data_instance.ORM("UPDATE", Dish.__name__.upper(), object_id=id, object_instance=dish)
+        return {"message": "dish updated with success"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
+
+
+@router.delete("/Dish/{id}")
+def delete_user(id: int):
+    try:
+        data_instance.ORM("DELETE", Dish.__name__.upper(), object_id=id)
+        return {"message": "dish deleted with success"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
