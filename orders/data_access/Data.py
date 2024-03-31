@@ -33,7 +33,7 @@ class Data(metaclass=Singleton):
         :return: La localisation en question
 
         """
-        def create_localisation(localisation: Localisation):
+        def create_localisation(localisation: Localisation, loc_id:int):
             """
             methodes permettant d'ajouter une localisation dans la table Localisation
 
@@ -41,7 +41,7 @@ class Data(metaclass=Singleton):
 
             """
             sql = "INSERT INTO Localisation (localisation_id, address, city, postal_code) VALUES (?, ?, ?);"
-            self.data_access.execute(sql, (localisation.localisation_id, localisation.adress, localisation.city, localisation.postal_code))
+            self.data_access.execute(sql, (loc_id, localisation.address, localisation.city, localisation.postal_code))
             self.data_access.commit()
             return localisation
 
@@ -94,7 +94,7 @@ class Data(metaclass=Singleton):
                 if object is None:
                     raise ValueError("Erreur lors création localisation (objet null)")
                 if isinstance(object, Order):
-                    return create_localisation(object)
+                    return create_localisation(object, object_id)
                 else:
                     raise ValueError("Erreur : mauvais type fournis en paramètre pour la localisation")
             case "READ":
@@ -194,6 +194,8 @@ class Data(metaclass=Singleton):
                                            order.price, order.date))
             # Récupération de l'ID de la commande insérée
             order_id = self.data_access.cursor.lastrowid
+            # Creation localisation
+            self.localisation_CRUD(self, "CREATE", order.localisation, order_id)
             # Creation d'un tuple pour chaque valeur de menus_id
             for menu_id in order.menus_id:
                 self.menusOfOrder_CRUD(self, "CREATE", (order_id, menu_id,1), None)

@@ -50,7 +50,7 @@ class CreateData(metaclass=Singleton):
             self.data_access.execute(
                 """
                     CREATE TABLE Orders (
-                        command_id INT PRIMARY KEY AUTOINCREMENT,
+                        command_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_id INT,
                         localisation_id INT,
                         price DOUBLE,
