@@ -14,10 +14,8 @@ class CreateData(metaclass=Singleton):
     file_path: str
     data_access: sqlite3.Connection
 
-    def __init__(self, file_path):
-        file_path = FICHIER_SAUVEGARDE
-        self.file_path = file_path
-        self.data_access = sqlite3.connect(self.file_path)
+    def __init__(self, data_a:sqlite3.Connection):
+        self.data_access = data_a
 
         # Verification tables existent
         if not self.tables_exist() :

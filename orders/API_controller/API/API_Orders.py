@@ -5,7 +5,7 @@ Fichier permettant la gestion des URL de la classe Order
 
 from data_access.Data import Data
 from orders.model_types.Order import Order
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -25,11 +25,17 @@ def data_transmission(data: Data):
     if data_instance is None:
         data_instance = data
 
+@router.get("/")
+def welcome():
+    return {"message": "Bienvenue sur l'API"}
 
 @router.get("/order/{order_id}")
 def read_order(order_id: int):
-    result = data_instance.order_CRUD(data_instance, "READ", None, order_id)
-    return {"Lecture Commande", result}
+    try:
+        order = data_instance.order_CRUD("READ", Order.__name__.upper(), object_id=id)
+        return {"message": "La commande a été lue avec succès. ", "Commande": order}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
 
 
 @router.post("/order")
@@ -39,7 +45,11 @@ def create_order(order: Order):
 
     :param order: les informations de la commande
     """
-    return {""}
+    try:
+        data_instance.order_CRUD("CREATE", Order.__name__.upper(), object_instance=order)
+        return {"message": "La commande a été crée"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
 
 
 @router.put("/order/{order_id}")
@@ -50,7 +60,11 @@ def update_order(order_id: int, order: Order):
     :param order_id: l'identifiant de la commande à modifier
     :param order: les nouvelles informations de la commande
     """
-    pass
+    try:
+        data_instance.order_CRUD("UPDATE", Order.__name__.upper(), object_id=id, object_instance=order)
+        return {"message": "Commande mise à jour avec succès"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
 
 
 @router.delete("/order/{order_id}")
@@ -60,4 +74,8 @@ def delete_order(order_id: int):
 
     :param order_id: l'identifiant de la commande à supprimer
     """
-    pass
+    try:
+        data_instance.order_CRUD("DELETE", Order.__name__.upper(), object_id=id)
+        return {"message": "Commande supprimée avec succès"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))

@@ -16,10 +16,11 @@ class Data(metaclass=Singleton):
     data_access: sqlite3.Connection
     createData : CreateData
 
+
     def __init__(self, file_path=FICHIER_SAUVEGARDE):
         self.file_path = file_path
-        self.data_access = sqlite3.connect(self.file_path)
-        self.createData = CreateData(self)
+        self.data_access = sqlite3.connect(self.file_path, check_same_thread=False)
+        self.createData = CreateData(self.data_access)
 
         # Verification tables existent
         if not self.createData.tables_exist():
@@ -237,3 +238,20 @@ class Data(metaclass=Singleton):
             # Suppression localisation
             self.localisation_CRUD(self, "DELETE", None, object_id)
             return None
+
+        match method:
+            case "CREATE":
+                if object is None:
+                    raise ValueError("Erreur lors création commande (objet null)")
+                else:
+                    return create_order(object)
+            case "READ":
+                if object_id is None:
+                    raise ValueError("Erreur lors lecture commande (id null)")
+                else:
+                    return read_order(object_id)
+            case "DELETE":
+                if object_id is None:
+                    raise ValueError("Erreur lors suppression commande (id null)")
+                else:
+                    return delete_order(object_id)
