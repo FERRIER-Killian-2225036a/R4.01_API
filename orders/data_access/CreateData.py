@@ -14,14 +14,8 @@ class CreateData(metaclass=Singleton):
     file_path: str
     data_access: sqlite3.Connection
 
-    def __init__(self, file_path):
-        file_path = FICHIER_SAUVEGARDE
-        self.file_path = file_path
-        self.data_access = sqlite3.connect(self.file_path)
-
-        # Verification tables existent
-        if not self.tables_exist() :
-            self.create_tables()
+    def __init__(self, data_a:sqlite3.Connection):
+        self.data_access = data_a
 
     def tables_exist(self):
         """
@@ -29,7 +23,7 @@ class CreateData(metaclass=Singleton):
 
         """
         cursor = self.data_access.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='ORDER'")
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Localisation';")
         return cursor.fetchone() is None
 
     def create_tables(self):
@@ -52,7 +46,7 @@ class CreateData(metaclass=Singleton):
             self.data_access.execute(
                 """
                     CREATE TABLE Orders (
-                        command_id INT PRIMARY KEY AUTOINCREMENT,
+                        command_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_id INT,
                         localisation_id INT,
                         price DOUBLE,
