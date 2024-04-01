@@ -24,7 +24,7 @@ class Data(metaclass=Singleton):
                                            detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
 
         self.crud_user = CrudUsers(self.data_access)
-        self.crud_dishes = CrudDishes(self.data_access)
+        self.crud_dish = CrudDishes(self.data_access)
         self.authentication_manager = AuthenticationManager(self.data_access)
 
         if not self.tables_exist():
@@ -44,7 +44,7 @@ class Data(metaclass=Singleton):
                 """
                     CREATE TABLE USER (
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        login TEXT NOT NULL,
+                        login TEXT UNIQUE NOT NULL,
                         password TEXT NOT NULL
                     );
                 """
@@ -55,7 +55,7 @@ class Data(metaclass=Singleton):
                 """
                     CREATE TABLE DISH (
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        description TEXT NOT NULL,
+                        description TEXT UNIQUE NOT NULL,
                         price REAL NOT NULL
                     );
                 """

@@ -36,6 +36,8 @@ def create_user(user: User):
 def get_user(id: int):
     try:
         user = data_instance.ORM("READ", User.__name__.upper(), object_id=id)
+        if user is None:
+            raise ValueError("User not found")
         return {"message": "user readed with success","user": user}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))

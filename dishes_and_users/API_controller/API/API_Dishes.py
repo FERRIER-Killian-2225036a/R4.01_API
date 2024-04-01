@@ -36,6 +36,8 @@ def create_user(dish: Dish):
 def get_user(id: int):
     try:
         dish = data_instance.ORM("READ", Dish.__name__.upper(), object_id=id)
+        if dish is None:
+            raise ValueError("Dish not found")
         return {"message": "dish readed with success", "dish": dish}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))

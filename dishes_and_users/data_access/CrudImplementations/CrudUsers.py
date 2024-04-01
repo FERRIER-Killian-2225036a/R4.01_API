@@ -5,7 +5,6 @@ from dishes_and_users.model_types.User import User
 class CrudUsers(CrudInterface):
 
     def create(self, object_instance: User):
-        print("hello")
         print(object_instance)
         sql = "INSERT INTO USER (login, password) VALUES (?, ?);"
         self.data_access.execute(sql,(object_instance.login,

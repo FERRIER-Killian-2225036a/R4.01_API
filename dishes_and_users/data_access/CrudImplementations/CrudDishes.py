@@ -5,7 +5,7 @@ from dishes_and_users.model_types.Dish import Dish
 class CrudDishes(CrudInterface):
 
     def create(self, object_instance: Dish):
-        sql = "INSERT INTO DISH (login, password) VALUES (?, ?);"
+        sql = "INSERT INTO DISH (description, price) VALUES (?, ?);"
         self.data_access.execute(sql, (object_instance.description,
                                        object_instance.price))
         self.data_access.commit()
