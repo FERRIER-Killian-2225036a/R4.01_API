@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+        }
+        section {
+            padding: 20px;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .menu-item img {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        .menu-item-details {
+            flex-grow: 1;
+        }
+        .menu-item-details h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .menu-item-details p {
+            margin: 0;
+        }
+        .menu-section {
+            margin-top: 30px;
+            border-top: 2px solid #333;
+            padding-top: 20px;
+        }
+        .menu-section h2 {
+            margin-bottom: 10px;
+        }
+        .menu-section .menu {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .menu-section .menu-item {
+            flex-basis: calc(20% - 20px);
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+         .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+        }
+        .modal-content label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .modal-content input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .modal-content button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Menu de Restaurant</h1>
+        <nav>
+            <a href="#menu1">Menu 1</a>
+            <a href="#menu2">Menu 2</a>
+            <a href="#plats">Plats</a>
+        </nav>
+    </header>
+
+    <section id="plats">
+        <h2>Plats</h2>
+        <div class="menu-item plat1">
+            <img src="https://i.imgur.com/EXAMPLE1.jpg" alt="Plat 1">
+            <div class="menu-item-details">
+                <h3>Audran soupoudré de calamar</h3>
+                <p>Audran cuit pendant 45min à 240 degrés arrosé de calamar</p>
+                <p> 1€ symbolique</p>
+            </div>
+        </div>
+        <div class="menu-item plat2">
+            <img src="https://i.imgur.com/EXAMPLE1.jpg" alt="Plat 2">
+            <div class="menu-item-details">
+                <h3>Tom à la sauce du chef</h3>
+                <p>Tom dont son sac est fait</p>
+                <p>5.85€</p>
+            </div>
+        </div>
+        <div class="menu-item plat3">
+            <img src="https://i.imgur.com/EXAMPLE1.jpg" alt="Plat 3">
+            <div class="menu-item-details">
+                <h3>Killiane au féminin</h3>
+                <p>Le féminisme n'est pas que pour les femmes</p>
+                <p>8.98€</p>
+            </div>
+        </div>
+
+        <!-- <div class="menu-item plat2">
+            <img src="https://i.imgur.com/EXAMPLE2.jpg" alt="Plat 2">
+            <div class="menu-item-details">
+                <h3>Nom du Plat 2</h3>
+                <p>Description du Plat 2</p>
+            </div>
+        </div> -->
+    </section>
+
+    <section class="menu-section" id="menu1">
+        <h2>Menu 1</h2>
+        <div class="menu">
+            <div class="menu-item menu1">
+                <div class="menu-item-details">
+                    <h3>Menu 1</h3>
+                    <p>Plat 1 + plat 2 + boisson / dessert</p>
+                    <p>Prix : $20</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-section" id="menu2">
+        <h2>Menu 2</h2>
+        <div class="menu">
+            <div class="menu-item menu2">
+                <div class="menu-item-details">
+                    <h3>Menu 2</h3>
+                    <p> plat 1/2/3</p>
+                    <p>Prix : $25</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="button-container">
+        <button id="create-menu-btn">Créer Menu</button>
+        <button>Commander</button>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Sélectionnez les plats pour votre menu</h2>
+            <div id="plates-list">
+            </div>
+            <button id="validate-btn">Valider</button>
+
+        </div>
+    </div>
+
+    <script>
+        const createMenuBtn = document.getElementById('create-menu-btn');
+        const modal = document.getElementById('modal');
+        const platesList = document.getElementById('plates-list');
+        const validateBtn = document.getElementById('validate-btn');
+
+        createMenuBtn.addEventListener('click', function() {
+            modal.style.display = 'block';
+
+            const plates = ['Audran soupoudré de calamar', 'Tom à la sauce du chef', 'Killiane au féminin'];
+            platesList.innerHTML = '';
+            plates.forEach(function(plate) {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = plate;
+                const label = document.createElement('label');
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(plate));
+                platesList.appendChild(label);
+            });
+        });
+
+        validateBtn.addEventListener('click', function() {
+            const selectedPlates = Array.from(platesList.querySelectorAll('input[type="checkbox"]:checked')).map(function(checkbox) {
+                return checkbox.value;
+            });
+
+            console.log('Plats sélectionnés:', selectedPlates);
+
+            modal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
