@@ -2,6 +2,6 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
-    id:int
+    id: int
     login: str
     password: str

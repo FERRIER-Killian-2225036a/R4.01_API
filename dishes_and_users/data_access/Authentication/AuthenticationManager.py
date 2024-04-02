@@ -1,7 +1,5 @@
 import sqlite3
 
-from model_types.User import User
-
 
 class AuthenticationManager:
     data_acess: sqlite3.Connection

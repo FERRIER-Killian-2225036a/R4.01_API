@@ -1,7 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,HTTPException
 from data_access.Data import Data
-from dishes_and_users.model_types.User import User
-from fastapi import HTTPException
+from model_types.User import User
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -27,7 +26,7 @@ def data_transmission(data: Data):
 def create_user(user: User):
     try :
         data_instance.ORM("CREATE",User.__name__.upper(),object_instance=user)
-        return {"message":"user created with success"}
+        return {"message": "user created with success"}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
 
@@ -60,3 +59,14 @@ def delete_user(id: int):
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
 
+
+@router.get("/User/list/")
+async def list_user():
+    try:
+        list_users = data_instance.ORM("LIST", User.__name__.upper())
+        if list is None or list is []:
+            raise ValueError("no users in the database")
+        return {"message":"users listed with success",
+                "dishes":list_users}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
