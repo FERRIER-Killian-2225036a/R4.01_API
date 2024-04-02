@@ -25,3 +25,6 @@ class CrudInterface:
 
     def delete(self, object_id: int):
         pass
+
+    def list(self):
+        pass

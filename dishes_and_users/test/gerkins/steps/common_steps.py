@@ -1,5 +1,5 @@
 import os
-from behave import given, when, then
+from behave import given, then
 from dishes_and_users.data_access.Data import Data
 from dishes_and_users.API_controller.General_Controller import General_Controller
 from fastapi.testclient import TestClient

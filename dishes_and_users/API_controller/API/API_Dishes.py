@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from data_access.Data import Data
-from dishes_and_users.model_types.Dish import Dish
+from model_types.Dish import Dish
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -57,5 +57,17 @@ def delete_user(id: int):
     try:
         data_instance.ORM("DELETE", Dish.__name__.upper(), object_id=id)
         return {"message": "dish deleted with success"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
+
+
+@router.get("/Dish/list/")
+async def list_dish():
+    try:
+        list_dish = data_instance.ORM("LIST", Dish.__name__.upper())
+        if list is None or list is []:
+            raise ValueError("no dishes in the database")
+        return {"message": "dishes listed with success",
+                "dishes": list_dish}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
