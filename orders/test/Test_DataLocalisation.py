@@ -19,6 +19,16 @@ class Test_DataLocalisation(unittest.TestCase):
         """
         cls.data = Data(FICHIER_SAUVEGARDE)
 
+    @classmethod
+    def tearDownClass(cls):
+        """
+        Nettoyage après les tests
+        """
+        cursor = cls.data.data_access.cursor()
+        cursor.execute("DELETE FROM Localisation")
+        cls.data.data_access.commit()
+        cls.data.data_access.close()
+
     def test_create_localisation(self):
         """
         Test unitaire : Création tuple table Localisation
@@ -31,16 +41,16 @@ class Test_DataLocalisation(unittest.TestCase):
         """
         Test unitaire : Lecture tuple table Localisation
         """
-        loc = Localisation(localisation_id=1, address='123 Rue Test', city='Testville', postal_code='12345')
+        loc = Localisation(localisation_id=2, address='123 Rue Test', city='Testville', postal_code='12345')
         self.data.localisation_CRUD("CREATE", loc, loc.localisation_id)
-        read_localisation = self.data.localisation_CRUD("READ", None, loc.localisation_id)
+        read_localisation = self.data.localisation_CRUD("READ", None, 2)
         self.assertEqual(read_localisation, loc)
 
     def test_update_localisation(self):
         """
         Test unitaire : Mise à jour tuple table Localisation
         """
-        loc = Localisation(localisation_id=1, address='123 Rue Test', city='Testville', postal_code='12345')
+        loc = Localisation(localisation_id=3, address='123 Rue Test', city='Testville', postal_code='12345')
         self.data.localisation_CRUD("CREATE", loc, loc.localisation_id)
         loc.address = '456 Rue Test'
         updated_localisation = self.data.localisation_CRUD("UPDATE", loc, loc.localisation_id)
@@ -50,7 +60,7 @@ class Test_DataLocalisation(unittest.TestCase):
         """
         Test unitaire : Suppression tuple table Localisation
         """
-        loc = Localisation(localisation_id=1, address='123 Rue Test', city='Testville', postal_code='12345')
+        loc = Localisation(localisation_id=4, address='123 Rue Test', city='Testville', postal_code='12345')
         self.data.localisation_CRUD("CREATE", loc, loc.localisation_id)
         self.data.localisation_CRUD("DELETE", None, loc.localisation_id)
         with self.assertRaises(ValueError):

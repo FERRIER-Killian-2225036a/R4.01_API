@@ -4,7 +4,10 @@ Fichier contenant les classes de test de l'API (routes)
 
 import unittest
 from fastapi.testclient import TestClient
+
+from core.config import FICHIER_SAUVEGARDE
 from data_access.Data import Data
+from model_types.Localisation import Localisation
 
 
 class TestOrderRoutes(unittest.TestCase):
@@ -14,7 +17,7 @@ class TestOrderRoutes(unittest.TestCase):
         Initialisation avant les tests
         """
         cls.client = TestClient()
-        cls.data = Data()
+        cls.data = Data(FICHIER_SAUVEGARDE)
         cls.data_transmission(cls.data)
 
     def test_welcome_route(self):
@@ -29,16 +32,13 @@ class TestOrderRoutes(unittest.TestCase):
         """
         Test unitaire : test route création commande
         """
+        loc = Localisation(localisation_id=10, address="123 Rue de Test", city="Testville",
+                                    postal_code="12345")
         order_data = {
             "command_id": 1,
             "menus_id": [1, 2],
             "user_id": 1,
-            "localisation": {
-                "localisation_id": 1,
-                "address": "123 Rue de Test",
-                "city": "Testville",
-                "postal_code": "12345"
-            },
+            "localisation": loc,
             "price": 100.0,
             "date": "2022-04-01"
         }

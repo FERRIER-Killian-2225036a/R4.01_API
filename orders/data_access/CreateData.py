@@ -2,12 +2,8 @@
 Classe permettant la gestion des données
 
 """
-
 from data_access.Singleton import Singleton
-from core.config import FICHIER_SAUVEGARDE
 import sqlite3
-
-from model_types.Order import Order
 
 
 class CreateData(metaclass=Singleton):
@@ -17,7 +13,7 @@ class CreateData(metaclass=Singleton):
     def __init__(self, data_a:sqlite3.Connection):
         self.data_access = data_a
 
-    def tables_exist(self):
+    def tables_not_exist(self):
         """
         methode permettant de verifier si les tables existent
 
@@ -81,7 +77,7 @@ class CreateData(metaclass=Singleton):
             self.data_access.execute(
                 """
                     CREATE TABLE Localisation (
-                        localisation_id INTEGER PRIMARY KEY,
+                        localisation_id INT PRIMARY KEY,
                         address TEXT,
                         city VARCHAR(25),
                         postal_code VARCHAR(5)

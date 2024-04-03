@@ -2,6 +2,8 @@
 Classe permettant la gestion des données
 
 """
+import integer
+
 from data_access.CreateData import CreateData
 from data_access.Singleton import Singleton
 from core.config import FICHIER_SAUVEGARDE
@@ -23,7 +25,7 @@ class Data(metaclass=Singleton):
         self.createData = CreateData(self.data_access)
 
         # Verification tables existent
-        if not self.createData.tables_exist():
+        if self.createData.tables_not_exist():
             self.createData.create_tables()
 
     def localisation_CRUD(self, method: str, object=None | Localisation, object_id=None | int) -> Localisation | None:
@@ -41,7 +43,7 @@ class Data(metaclass=Singleton):
             :param: localisation
 
             """
-            sql = "INSERT INTO Localisation (localisation_id, address, city, postal_code) VALUES (?, ?, ?);"
+            sql = "INSERT INTO Localisation (localisation_id, address, city, postal_code) VALUES (?, ?, ?, ?);"
             self.data_access.execute(sql, (loc_id, localisation.address, localisation.city, localisation.postal_code))
             self.data_access.commit()
             return localisation

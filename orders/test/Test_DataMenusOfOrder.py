@@ -3,18 +3,32 @@ Fichier contenant les classes de test du CRUD de la table MenusOfOrder
 """
 
 import unittest
+
+from core.config import FICHIER_SAUVEGARDE
 from data_access.Data import Data
 from model_types.Localisation import Localisation
 from model_types.Order import Order
 
 
 class Test_DataMenusOfOrder(unittest.TestCase):
+    data = Data
+
     @classmethod
     def setUpClass(cls):
         """
         Initialisation avant les tests
         """
-        cls.data = Data()
+        cls.data = Data(FICHIER_SAUVEGARDE)
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        Nettoyage après les tests
+        """
+        cursor = cls.data.data_access.cursor()
+        cursor.execute("DELETE FROM Localisation")
+        cls.data.data_access.commit()
+        cls.data.data_access.close()
 
     def test_create_menusOfOrder(self):
         """

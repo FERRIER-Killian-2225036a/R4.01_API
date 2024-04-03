@@ -3,11 +3,12 @@ Fichier permettant de tester la création des données
 
 """
 import unittest
+
 from data_access.Data import Data
 from core.config import FICHIER_SAUVEGARDE
 
 
-class TestCreateData(unittest.TestCase):
+class Test_CreateData(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.connection = Data(FICHIER_SAUVEGARDE)
@@ -16,7 +17,7 @@ class TestCreateData(unittest.TestCase):
         """
         Test unitaire : vérification que les tables sont créées
         """
-        self.assertTrue(self.connection.createData.tables_exist())
+        self.assertFalse(self.connection.createData.tables_not_exist())
 
     def test_table_localisation_exist(self):
         """
