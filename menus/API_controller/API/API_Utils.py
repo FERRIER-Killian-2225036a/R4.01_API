@@ -1,8 +1,6 @@
 from fastapi import APIRouter,Request
-from data_access.Data import Data
-from dishes_and_users.model_types.User import User
-from fastapi import HTTPException
-from core.config import AUTHOR, VERSION
+from menus.data_access.Data import Data
+from menus.core.config import AUTHOR, VERSION
 
 router = APIRouter()
 data_instance: Data | None = None

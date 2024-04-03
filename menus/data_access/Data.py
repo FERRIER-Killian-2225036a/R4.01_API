@@ -1,10 +1,10 @@
 import sqlite3
 
-from data_access.CrudImplementations.CrudMenus import CrudMenus
+from menus.data_access.CrudImplementations.CrudMenus import CrudMenus
 from menus.data_access.Singleton import Singleton
 from menus.core.config import SAVE_FILE
-from model_types.Menu import Menu
-from model_types.Dish import Dish
+from menus.model_types.Menu import Menu
+from menus.model_types.Dish import Dish
 from typing import Literal
 
 
@@ -12,7 +12,6 @@ class Data(metaclass=Singleton):
     file_path: str
     data_access: sqlite3.Connection
     crud_menu: CrudMenus
-    authentication_manager: AuthenticationManager
 
     def __init__(self, file_path=SAVE_FILE):
         self.file_path = file_path
@@ -39,8 +38,8 @@ class Data(metaclass=Singleton):
                 """
                     CREATE TABLE MENU (
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        utilisateur_id INTEGER UNIQUE NOT NULL
-                        plats TEXT UNIQUE NOT NULL,
+                        utilisateur_id INTEGER UNIQUE NOT NULL,
+                        dishes TEXT UNIQUE NOT NULL,
                         date_creation DATE NOT NULL,
                         date_modification DATE NOT NULL
                     );

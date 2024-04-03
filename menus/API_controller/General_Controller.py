@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from API_controller.API import API_Dishes, API_Users, API_Utils
-from data_access.Data import Data
+from menus.API_controller.API import API_Menus, API_Utils
+from menus.data_access.Data import Data
 
 
 class General_Controller:

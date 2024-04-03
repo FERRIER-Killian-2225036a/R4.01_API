@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from data_access.Data import Data
-from dishes_and_users.model_types.Menu import Menu
+from menus.data_access.Data import Data
+from menus.model_types.Menu import Menu
 
 router = APIRouter()
 data_instance: Data | None = None

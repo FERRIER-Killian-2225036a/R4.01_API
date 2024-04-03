@@ -1,10 +1,10 @@
 from pydantic import BaseModel
-import Dish 
+from menus.model_types.Dish import Dish
 
 
 class Menu(BaseModel):
     id: int
     utilisateur_id: int
-    plats: list[Dish]
-    date_creation: date
-    date_modification: date
+    dishes: list[Dish]
+    date_creation: str
+    date_modification: str
