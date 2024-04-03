@@ -53,12 +53,14 @@ class Data(metaclass=Singleton):
             methodes permettant de lire une localisation dans la table Localisation
 
             :param: object_id L'id de la localisation à lire
+            :return la localisation lu
 
             """
             sql = "SELECT address, city, postal_code FROM Localisation WHERE localisation_id = ?;"
-            self.data_access.execute(sql, object_id)
+            curs = self.data_access.cursor()
+            curs.execute(sql, (object_id,))
             # Récupération des données de la localisation
-            row = self.data_access.cursor.fetchone()
+            row = curs.fetchone()
             # Vérification si une ligne a été retournée
             if row is None:
                 raise ValueError("La localisation avec l'ID", object_id, " n'existe pas")
@@ -88,7 +90,7 @@ class Data(metaclass=Singleton):
 
             """
             sql = "DELETE FROM Localisation WHERE localisation_id = ?;"
-            self.data_access.execute(sql, object_id)
+            self.data_access.execute(sql, (object_id,))
             self.data_access.commit()
             return None
 
@@ -96,10 +98,8 @@ class Data(metaclass=Singleton):
             case "CREATE":
                 if object is None:
                     raise ValueError("Erreur lors création localisation (objet null)")
-                if isinstance(object, Localisation):
-                    return create_localisation(object, object_id)
                 else:
-                    raise ValueError("Erreur : mauvais type fournis en paramètre pour la localisation")
+                    return create_localisation(object, object_id)
             case "READ":
                 if object_id is None:
                     raise ValueError("Erreur lors lecture localisation (id null)")
@@ -110,10 +110,8 @@ class Data(metaclass=Singleton):
                     raise ValueError("Erreur lors modification localisation (objet null)")
                 if object_id is None:
                     raise ValueError("Erreur lors modification localisation (id null)")
-                if isinstance(object, Localisation):
-                    return update_localisation(object_id, object)
                 else:
-                    raise ValueError("Erreur : mauvais type fournis en paramètre pour la localisation")
+                    return update_localisation(object_id, object)
             case "DELETE":
                 if object_id is None:
                     raise ValueError("Erreur lors suppression localisation (id null)")
@@ -149,9 +147,10 @@ class Data(metaclass=Singleton):
             :return: Liste d'identifiants de menu
             """
             sql = "SELECT menu_id FROM MenusOfOrder WHERE command_id = ?;"
+            curs = self.data_access.cursor()
             # Exécution de la requête SQL avec l'ID de la commande
-            self.data_access.execute(sql, object_id)
-            menu_ids = [row[0] for row in self.data_access.cursor.fetchall()]
+            curs.execute(sql, (object_id,))
+            menu_ids = [row[0] for row in curs.fetchall()]
             return menu_ids
 
         def delete_menusOfOrder(object_id: int):
@@ -161,7 +160,7 @@ class Data(metaclass=Singleton):
             :param: Un entier correspondant à l'id de la commande
             """
             sql = "DELETE FROM MenusOfOrder WHERE command_id = ?;"
-            self.data_access.execute(sql, object_id)
+            self.data_access.execute(sql, (object_id,))
             self.data_access.commit()
             return None
 
@@ -193,17 +192,18 @@ class Data(metaclass=Singleton):
             methodes permettant d'ajouter une commande dans la table Order
 
             """
-            sql = "INSERT INTO Orders (user_id, localisation_id, price, date) VALUES (?,?,?,?,?);"
-            self.data_access.execute(sql, (order.user_id, order.localisation.localisation_id,
-                                           order.price, order.date))
+            sql = "INSERT INTO Orders (user_id, localisation_id, price, date) VALUES (?,?,?,?);"
+            curs = self.data_access.cursor()
+            curs.execute(sql, (order.user_id, order.localisation.localisation_id,
+                               order.price, order.date))
             # Récupération de l'ID de la commande insérée
-            order_id = self.data_access.cursor.lastrowid
+            order_id = curs.lastrowid
             order.command_id = order_id
             # Creation localisation
-            self.localisation_CRUD(self, "CREATE", order.localisation, order_id)
+            self.localisation_CRUD("CREATE", order.localisation, order_id)
             # Creation d'un tuple pour chaque valeur de menus_id
             for menu_id in order.menus_id:
-                self.menusOfOrder_CRUD(self, "CREATE", (order_id, menu_id, 1), None)
+                self.menusOfOrder_CRUD("CREATE", (order_id, menu_id, 1), None)
             self.data_access.commit()
             return order
 
@@ -213,24 +213,31 @@ class Data(metaclass=Singleton):
 
             """
             sql = "SELECT user_id, localisation_id, price, date FROM Orders WHERE command_id = ?;"
-            order_read = self.data_access.execute(sql, object_id).fetchone()
+            order_read = self.data_access.execute(sql, (object_id,)).fetchone()
             if order_read is None:
-                raise ValueError("Impossible de lire la commande n" + object_id)
-            read_menus_id = self.menusOfOrder_CRUD(self, "READ", None, object_id)
-            read_localisation = self.localisation_CRUD(self, "READ", None, object_id)
+                raise ValueError("Impossible de lire la commande n" + str(object_id))
+            read_menus_id = self.menusOfOrder_CRUD("READ", None, object_id)
+            read_localisation = self.localisation_CRUD("READ", None, object_id)
+            read_loc_format = {
+                "localisation_id": read_localisation.localisation_id,
+                "address": read_localisation.address,
+                "city": read_localisation.city,
+                "postal_code": read_localisation.postal_code
+            }
             return Order(command_id=object_id, menus_id=read_menus_id, user_id=order_read[0],
-                         localisation=read_localisation, price=order_read[1], date=order_read[2])
+                         localisation=read_loc_format, price=order_read[2], date=order_read[3])
 
-        def update_order(object_id: int, order: Order):
+        def update_order(object_id: int, object: Order):
             """
             methodes permettant de mettre à jour une commande dans la table Order
 
             """
-            sql = "ALTER TABLE Orders SET user_id=?, localisation_id=?, price=?, date=?) WHERE command_id=?;"
-            self.data_access.execute(sql, (order.user_id, order.localisation.localisation_id,
-                                           order.price, order.date, object_id))
+            sql = "UPDATE Orders SET user_id=?, localisation_id=?, price=?, date=? WHERE command_id=?;"
+            self.localisation_CRUD("UPDATE", object.localisation, object.localisation.localisation_id)
+            self.data_access.execute(sql, (object.user_id, object.localisation.localisation_id,
+                                           object.price, object.date, object_id))
             self.data_access.commit()
-            return order
+            return object
 
         def delete_order(object_id: int):
             """
@@ -238,13 +245,13 @@ class Data(metaclass=Singleton):
 
             """
             # Suppression menus
-            self.menusOfOrder_CRUD(self, "DELETE", None, object_id)
+            self.menusOfOrder_CRUD("DELETE", None, object_id)
             # Suppression commande
             sql = "DELETE FROM Orders WHERE command_id = ?;"
-            self.data_access.execute(sql, object_id)
+            self.data_access.execute(sql, (object_id,))
             self.data_access.commit()
             # Suppression localisation
-            self.localisation_CRUD(self, "DELETE", None, object_id)
+            self.localisation_CRUD("DELETE", None, object_id)
             return None
 
         match method:
@@ -258,6 +265,13 @@ class Data(metaclass=Singleton):
                     raise ValueError("Erreur lors lecture commande (id null)")
                 else:
                     return read_order(object_id)
+            case "UPDATE":
+                if object_id is None:
+                    raise ValueError("Erreur lors modification commande (id null)")
+                if object is None:
+                    raise ValueError("Erreur lors modification commande (objet null)")
+                else:
+                    return update_order(object_id, object)
             case "DELETE":
                 if object_id is None:
                     raise ValueError("Erreur lors suppression commande (id null)")

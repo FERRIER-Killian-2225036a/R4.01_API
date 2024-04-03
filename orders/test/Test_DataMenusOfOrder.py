@@ -28,7 +28,6 @@ class Test_DataMenusOfOrder(unittest.TestCase):
         cursor = cls.data.data_access.cursor()
         cursor.execute("DELETE FROM Localisation")
         cls.data.data_access.commit()
-        cls.data.data_access.close()
 
     def test_create_menusOfOrder(self):
         """

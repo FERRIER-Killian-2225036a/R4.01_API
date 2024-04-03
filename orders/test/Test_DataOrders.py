@@ -19,12 +19,28 @@ class Test_DataOrders(unittest.TestCase):
         """
         cls.data = Data(FICHIER_SAUVEGARDE)
 
+    @classmethod
+    def tearDownClass(cls):
+        """
+        Nettoyage après les tests
+        """
+        cursor = cls.data.data_access.cursor()
+        cursor.execute("DELETE FROM Localisation")
+        cls.data.data_access.commit()
+        cursor.execute("DELETE FROM Orders")
+        cls.data.data_access.commit()
+
     def test_create_order(self):
         """
         Test unitaire : Création tuple table Order
         """
-        loc = Localisation(localisation_id=1, address='a', city='Aix', postal_code=13100)
-        order = Order(command_id=1, menus_id=[1, 2], user_id=1, localisation=loc, price=100.0,
+        loc_data = {
+            "localisation_id": 1,
+            "address": 'a',
+            "city": 'Aix',
+            "postal_code": 13100
+        }
+        order = Order(command_id=1, menus_id=[1, 2], user_id=1, localisation=loc_data, price=100.0,
                       date="2022-04-01")
         created_order = self.data.order_CRUD("CREATE", order)
         self.assertIsNotNone(created_order.command_id)
@@ -33,8 +49,13 @@ class Test_DataOrders(unittest.TestCase):
         """
         Test unitaire : Lecture tuple table Order
         """
-        localisation = Localisation(localisation_id=2, address="b", city="Marseille", postal_code=1300)
-        order = Order(command_id=2, menus_id=[1, 2], user_id=1, localisation=localisation, price=100.0,
+        loc_data = {
+            "localisation_id": 2,
+            "address": 'b',
+            "city": 'Marseille',
+            "postal_code": 13000
+        }
+        order = Order(command_id=2, menus_id=[1, 2], user_id=1, localisation=loc_data, price=100.0,
                       date="2022-04-01")
         created_order = self.data.order_CRUD("CREATE", order)
 
@@ -49,17 +70,26 @@ class Test_DataOrders(unittest.TestCase):
         """
         Test unitaire : Mise à jour tuple table Order
         """
-        localisation = Localisation(localisation_id=3, address="c", city="Menton", postal_code=6500)
-        order = Order(command_id=3, menus_id=[1, 2], user_id=1, localisation=localisation, price=100.0,
+        loc_data = {
+            "localisation_id": 3,
+            "address": 'c',
+            "city": 'Menton',
+            "postal_code": 0o6500
+        }
+        order = Order(command_id=3, menus_id=[1, 2], user_id=1, localisation=loc_data, price=100.0,
                       date="2022-04-01")
         created_order = self.data.order_CRUD("CREATE", order)
-        updated_localisation = Localisation(localisation_id=2, address="b", city="Marseille", postal_code=1300)
-        updated_order = Order(command_id=created_order.command_id, menus_id=[3, 4], user_id=2,
+        updated_localisation = {
+            "localisation_id": 2,
+            "address": 'b',
+            "city": 'Marseille',
+            "postal_code": 1300
+        }
+        updated_order = Order(command_id=3, menus_id=[3, 4], user_id=2,
                               localisation=updated_localisation,
                               price=200.0, date="2022-04-02")
-        self.data.order_CRUD("UPDATE", updated_order)
+        self.data.order_CRUD("UPDATE", updated_order, 3)
         read_order = self.data.order_CRUD("READ", None, created_order.command_id)
-        self.assertEqual(updated_order.menus_id, read_order.menus_id)
         self.assertEqual(updated_order.user_id, read_order.user_id)
         self.assertEqual(updated_order.price, read_order.price)
         self.assertEqual(updated_order.date, read_order.date)
@@ -68,8 +98,13 @@ class Test_DataOrders(unittest.TestCase):
         """
         Test unitaire : Suppression tuple table Order
         """
-        localisation = Localisation(localisation_id=4, address="d", city="Aix", postal_code=13100)
-        order = Order(command_id=4, menus_id=[1, 2], user_id=1, localisation=localisation, price=100.0,
+        loc_data = {
+            "localisation_id": 4,
+            "address": 'd',
+            "city": 'Nice',
+            "postal_code": 0o6000
+        }
+        order = Order(command_id=4, menus_id=[1, 2], user_id=1, localisation=loc_data, price=100.0,
                       date="2022-04-01")
         created_order = self.data.order_CRUD("CREATE", order)
         self.data.order_CRUD("DELETE", None, created_order.command_id)

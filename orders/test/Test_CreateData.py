@@ -9,6 +9,7 @@ from core.config import FICHIER_SAUVEGARDE
 
 
 class Test_CreateData(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
         cls.connection = Data(FICHIER_SAUVEGARDE)
