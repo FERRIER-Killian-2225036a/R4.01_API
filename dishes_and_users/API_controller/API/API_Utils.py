@@ -1,9 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, HTTPException
 from data_access.Data import Data
-from dishes_and_users.model_types.User import User
-from fastapi import HTTPException
 from core.config import AUTHOR, VERSION
-
+from model_types.Dish import Dish
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -33,12 +31,16 @@ def read_root():
 
 
 @router.post("/auth")
-def auth(login: str, password: str):
-    try :
-        resultat = data_instance.ORM("AUTHENTICATE",credentials=[login,password])
+async def auth(request: Request):
+    try:
+        json = await request.json()
+        login = json["login"]
+        password = json["password"]
+        resultat = data_instance.ORM("AUTHENTICATE", credentials=[login, password])
         if resultat is True:
-            return {"message":"Good credentials"}
+            return {"message": "Good credentials"}
 
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
+
 

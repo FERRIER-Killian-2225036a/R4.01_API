@@ -1,11 +1,11 @@
-from dishes_and_users.data_access.CrudInterface import CrudInterface
-from dishes_and_users.model_types.Dish import Dish
+from data_access.CrudInterface import CrudInterface
+from model_types.Dish import Dish
 
 
 class CrudDishes(CrudInterface):
 
     def create(self, object_instance: Dish):
-        sql = "INSERT INTO DISH (login, password) VALUES (?, ?);"
+        sql = "INSERT INTO DISH (description, price) VALUES (?, ?);"
         self.data_access.execute(sql, (object_instance.description,
                                        object_instance.price))
         self.data_access.commit()
@@ -32,3 +32,13 @@ class CrudDishes(CrudInterface):
         sql = "DELETE FROM DISH WHERE ID = ?;"
         self.data_access.execute(sql, (object_id,))
         self.data_access.commit()
+
+    def list(self):
+        sql = "SELECT * FROM DISH ;"
+        result = self.data_access.execute(sql).fetchall()
+        list_dish = []
+        if result is not None and result is not []:
+            for el in result:
+                list_dish.append(Dish(id=el[0], description=el[1], price=float(el[2])))
+
+        return list_dish

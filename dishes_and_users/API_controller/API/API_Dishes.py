@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from data_access.Data import Data
-from dishes_and_users.model_types.Dish import Dish
+from model_types.Dish import Dish
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -24,7 +24,7 @@ def data_transmission(data: Data):
 
 
 @router.post("/Dish")
-def create_user(dish: Dish):
+def create_dish(dish: Dish):
     try:
         data_instance.ORM("CREATE", Dish.__name__.upper(), object_instance=dish)
         return {"message": "dish created with success"}
@@ -33,16 +33,18 @@ def create_user(dish: Dish):
 
 
 @router.get("/Dish/{id}")
-def get_user(id: int):
+def get_dish(id: int):
     try:
         dish = data_instance.ORM("READ", Dish.__name__.upper(), object_id=id)
+        if dish is None:
+            raise ValueError("Dish not found")
         return {"message": "dish readed with success", "dish": dish}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
 
 
 @router.put("/Dish/{id}")
-def update_user(id: int, dish: Dish):
+def update_dish(id: int, dish: Dish):
     try:
         data_instance.ORM("UPDATE", Dish.__name__.upper(), object_id=id, object_instance=dish)
         return {"message": "dish updated with success"}
@@ -51,9 +53,21 @@ def update_user(id: int, dish: Dish):
 
 
 @router.delete("/Dish/{id}")
-def delete_user(id: int):
+def delete_dish(id: int):
     try:
         data_instance.ORM("DELETE", Dish.__name__.upper(), object_id=id)
         return {"message": "dish deleted with success"}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))
+
+
+@router.get("/Dish/list/")
+async def list_dish():
+    try:
+        list_dish = data_instance.ORM("LIST", Dish.__name__.upper())
+        if list is None or list is []:
+            raise ValueError("no dishes in the database")
+        return {"message": "dishes listed with success",
+                "dishes": list_dish}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))

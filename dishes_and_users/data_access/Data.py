@@ -1,13 +1,13 @@
 import sqlite3
+from typing import Literal
 
+from core.config import SAVE_FILE
 from data_access.Authentication.AuthenticationManager import AuthenticationManager
-from data_access.CrudImplementations.CrudUsers import CrudUsers
 from data_access.CrudImplementations.CrudDishes import CrudDishes
-from dishes_and_users.data_access.Singleton import Singleton
-from dishes_and_users.core.config import SAVE_FILE
+from data_access.CrudImplementations.CrudUsers import CrudUsers
+from data_access.Singleton import Singleton
 from model_types.Dish import Dish
 from model_types.User import User
-from typing import Literal
 
 
 class Data(metaclass=Singleton):
@@ -24,7 +24,7 @@ class Data(metaclass=Singleton):
                                            detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
 
         self.crud_user = CrudUsers(self.data_access)
-        self.crud_dishes = CrudDishes(self.data_access)
+        self.crud_dish = CrudDishes(self.data_access)
         self.authentication_manager = AuthenticationManager(self.data_access)
 
         if not self.tables_exist():
@@ -44,7 +44,7 @@ class Data(metaclass=Singleton):
                 """
                     CREATE TABLE USER (
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        login TEXT NOT NULL,
+                        login TEXT UNIQUE NOT NULL,
                         password TEXT NOT NULL
                     );
                 """
@@ -55,7 +55,7 @@ class Data(metaclass=Singleton):
                 """
                     CREATE TABLE DISH (
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        description TEXT NOT NULL,
+                        description TEXT UNIQUE NOT NULL,
                         price REAL NOT NULL
                     );
                 """
@@ -69,7 +69,7 @@ class Data(metaclass=Singleton):
         except Exception as e:
             raise ValueError("Erreur lors des créations de tables" + str(e))
 
-    def ORM(self, method: Literal["CREATE", "READ", "UPDATE", "DELETE", "AUTHENTICATE"],
+    def ORM(self, method: Literal["CREATE", "READ", "UPDATE", "DELETE", "AUTHENTICATE", "LIST"],
             object_type: Literal["DISH", "USER"] | None = None,
             object_instance: Dish | User | None = None,
             object_id: int | None = None,
@@ -78,7 +78,7 @@ class Data(metaclass=Singleton):
         if object_type not in ("DISH", "USER", None):
             raise ValueError("Wrong type given")
         elif object_type is None:
-            if not method == "AUTHENTICATE":
+            if method not in ["AUTHENTICATE"]:
                 raise "no type was given"
         else:
             crud_function = getattr(self, f"crud_{object_type.lower()}")
@@ -104,5 +104,10 @@ class Data(metaclass=Singleton):
                     return self.authentication_manager.Authenticate(credentials[0], credentials[1])
                 else:
                     raise ValueError("Wrong parameters Types / values in credentials")
+            case 'LIST':
+                try:
+                    return crud_function.list()
+                except Exception as e:
+                    raise ValueError("No tuples in this table" + str(e))
             case _:
                 raise ValueError("Method not allowed")

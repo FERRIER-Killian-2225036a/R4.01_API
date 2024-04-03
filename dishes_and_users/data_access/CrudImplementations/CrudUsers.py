@@ -1,11 +1,10 @@
-from dishes_and_users.data_access.CrudInterface import CrudInterface
-from dishes_and_users.model_types.User import User
+from data_access.CrudInterface import CrudInterface
+from model_types.User import User
 
 
 class CrudUsers(CrudInterface):
 
     def create(self, object_instance: User):
-        print("hello")
         print(object_instance)
         sql = "INSERT INTO USER (login, password) VALUES (?, ?);"
         self.data_access.execute(sql,(object_instance.login,
@@ -35,3 +34,12 @@ class CrudUsers(CrudInterface):
         self.data_access.execute(sql, (object_id,))
         self.data_access.commit()
 
+    def list(self):
+        sql = "SELECT * FROM USER ;"
+        result = self.data_access.execute(sql).fetchall()
+        list_user = []
+        if result is not None and result is not []:
+            for el in result:
+                list_user.append(User(id=int(el[0]), login=el[1], password="NOT YOUR BUSINESS"))
+
+        return list_user
