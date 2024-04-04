@@ -12,7 +12,7 @@ def step_create_user(context):
 
 @then('Dish is created in the database')
 def step_user_created(context):
-    assert "dish created with success" in context.response.json()["message"]
+    assert "Dish created successfully" in context.response.json()["message"]
 
 
 @when("We try to read a Dish")
@@ -22,7 +22,7 @@ def step_read_user(context):
 
 @then("Dish is retrieved from the database in the response")
 def step_user_readed(context):
-    assert "dish readed with success" in context.response.json()["message"]
+    assert "Dish retrieved successfully" in context.response.json()["message"]
     assert context.response.json()["dish"]["description"] == "test"
     assert context.response.json()["dish"]["price"] == 10
     assert context.response.json()["dish"]["id"] == 1
@@ -43,7 +43,7 @@ def step_update_user(context):
 
 @then("Dish information is updated in the database")
 def step_user_updated(context):
-    assert "dish updated with success" in context.response.json()["message"]
+    assert "Dish updated successfully" in context.response.json()["message"]
     context.response_temp = context.client.get("/Dish/1")
     assert context.response_temp.json()["dish"]["description"] == "zozo"
     assert context.response_temp.json()["dish"]["price"] == 10
@@ -56,7 +56,7 @@ def step_delete_user(context):
 
 @then("Dish is removed from the database")
 def step_user_deleted(context):
-    assert "dish deleted with success" in context.response.json()["message"]
+    assert "Dish deleted successfully" in context.response.json()["message"]
     context.response_temp = context.client.get("/Dish/1")
     assert "Dish not found" in context.response_temp.json()["detail"]
     assert context.response_temp.status_code == 412

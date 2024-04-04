@@ -1,41 +1,45 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from API_controller.API import API_Dishes, API_Users, API_Utils
-from data_access.Data import Data
 from starlette.middleware.cors import CORSMiddleware
+
+from API_controller.API import API_Dishes, API_Users, API_Utils
 from core.config import API_CORS_ORIGINS
+from data_access.Data import Data
 
 
 class General_Controller:
     """
-    classe pour transmettre le routage vers l'api de l'application
+    Class for routing to the application's API.
 
+    Attributes:
+        app (FastAPI): FastAPI instance for handling API requests.
+        data (Data): Instance of the `Data` class for data access.
     """
-    app = FastAPI(default_response_class=JSONResponse, )
+
+    app = FastAPI(default_response_class=JSONResponse)
     data: Data
 
-    def __init__(self, data: Data):
+    def __init__(self, data: Data,test=False):
         """
-        constructeur
+        Constructor for the General_Controller class.
 
-        :param data:
+        Args:
+            data (Data): Instance of the Data class.
         """
-
-        self.app.add_middleware(
-            CORSMiddleware,
-            allow_origins=[API_CORS_ORIGINS],
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
+        if not test:
+            self.app.add_middleware(
+                CORSMiddleware,
+                allow_origins=[API_CORS_ORIGINS],
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
         self.data = data
 
     @classmethod
     def setup_routes(cls):
         """
-        appel des routes d'api de chaque fichiers d'api
-
-        :return:
+        Method to set up routes for various API endpoints.
         """
         API_Dishes.setup_routes(cls.app)
         print(" - Routes de API_Dishes configurées.")
@@ -46,9 +50,7 @@ class General_Controller:
 
     def data_transmission(self):
         """
-        transmet les données pour l'api
-
-        :return:
+        Method to transmit data to the API.
         """
         API_Dishes.data_transmission(self.data)
         print(" - Données transmises à API_Dishes.")
@@ -58,4 +60,10 @@ class General_Controller:
         print(" - Données transmises à API_Utils.")
 
     def getApp(self):
+        """
+        Method to get the FastAPI instance.
+
+        Returns:
+            FastAPI: The FastAPI instance.
+        """
         return self.app
