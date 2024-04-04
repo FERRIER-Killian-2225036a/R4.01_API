@@ -14,6 +14,7 @@ Feature: Menu has crud operations on the database
     Then Status code is "200"
     Then Menu is retrieved from the database in the response
 
+# Non implémenté
 """
   Scenario: Menu can be updated
     Given API is running
@@ -41,6 +42,8 @@ Feature: Menu has crud operations on the database
     When We try to read a non-existing Menu
     Then Menu is not found in the database
     And Status code is "412"
+
+# Non implémenté
 """
   Scenario: Attempting to update a non-existing Menu
     Given API is running

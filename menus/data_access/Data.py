@@ -1,19 +1,52 @@
-import sqlite3
+"""
+Data Access Module
+==================
 
+This module provides data access functionalities for the API.
+
+Dependencies:
+    - sqlite3: Standard SQLite3 database interface module.
+    - data_access.CrudImplementations.CrudMenus: CRUD operations implementation for Menu model.
+    - data_access.Singleton: Singleton metaclass for managing database connection.
+    - core.config: Configuration settings.
+    - model_types.Menu: Menu model.
+    - typing: Support for type hints.
+
+"""
+
+import sqlite3
 from data_access.CrudImplementations.CrudMenus import CrudMenus
 from data_access.Singleton import Singleton
 from core.config import SAVE_FILE
 from model_types.Menu import Menu
-from model_types.Dish import Dish
 from typing import Literal
 
 
 class Data(metaclass=Singleton):
+    """
+    Singleton class for managing data access.
+
+    This class handles database connection and provides methods for CRUD operations.
+
+    Attributes:
+        file_path (str): The file path for the SQLite database.
+        data_access (sqlite3.Connection): Connection to the SQLite database.
+        crud_menu (CrudMenus): CRUD operations implementation for Menu model.
+
+    """
+
     file_path: str
     data_access: sqlite3.Connection
     crud_menu: CrudMenus
 
     def __init__(self, file_path=SAVE_FILE):
+        """
+        Initializes the Data class.
+
+        Args:
+            file_path (str): The file path for the SQLite database.
+
+        """
         self.file_path = file_path
         self.data_access = sqlite3.connect('file:' + self.file_path, uri=True,
                                            detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
@@ -24,11 +57,25 @@ class Data(metaclass=Singleton):
             self.create_tables()
 
     def tables_exist(self):
+        """
+        Checks if tables exist in the database.
+
+        Returns:
+            bool: True if tables exist, False otherwise.
+
+        """
         cursor = self.data_access.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='MENU'")
         return cursor.fetchone() is not None
 
     def create_tables(self):
+        """
+        Creates tables in the database if they do not exist.
+
+        Raises:
+            ValueError: If an error occurs during table creation.
+
+        """
         def prepare_creation_tables():
             self.data_access.execute("PRAGMA foreign_keys = ON")
 
@@ -50,13 +97,32 @@ class Data(metaclass=Singleton):
             create_table_menu()
 
         except Exception as e:
-            raise ValueError("Erreur lors des créations de tables" + str(e))
+            raise ValueError("Error during table creation: " + str(e))
 
     def ORM(self, method: Literal["CREATE", "READ", "UPDATE", "DELETE"],
             object_type: Literal["MENU"] | None = None,
             object_instance: Menu | None = None,
             object_id: int | None = None):
+        """
+        Executes CRUD operations based on method and object type.
 
+        Args:
+            method (Literal["CREATE", "READ", "UPDATE", "DELETE"]): The CRUD method to execute.
+            object_type (Literal["MENU"] | None): The type of object to operate on.
+            object_instance (Menu | None): The instance of the Menu model.
+            object_id (int | None): The ID of the object.
+
+        Returns:
+            Depends on the CRUD operation:
+                - For CREATE: The created object.
+                - For READ: The retrieved object.
+                - For UPDATE: The updated object.
+                - For DELETE: None.
+
+        Raises:
+            ValueError: If method or object type is not allowed, or if parameters are missing or incorrect.
+
+        """
         if object_type not in ("MENU", None):
             raise ValueError("Wrong type given")
         else:

@@ -1,3 +1,15 @@
+"""
+General Controller Module
+=========================
+
+This module contains the General_Controller class responsible for routing to the API of the application.
+
+Attributes:
+    app (FastAPI): The FastAPI application instance.
+    data (Data): The data access instance.
+
+"""
+
 from fastapi import FastAPI
 from API_controller.API import API_Menus, API_Utils
 from data_access.Data import Data
@@ -5,23 +17,31 @@ from starlette.middleware.cors import CORSMiddleware
 from core.config import API_CORS_ORIGINS
 from fastapi.responses import JSONResponse
 
+
 class General_Controller:
     """
-    classe pour transmettre le routage vers l'api de l'application
+    Class for routing to the application's API.
+
+    Attributes:
+        app (FastAPI): The FastAPI application instance.
+        data (Data): The data access instance.
 
     """
+
     app = FastAPI()
-    data: Data
 
-    def __init__(self,data: Data):
+    def __init__(self, data: Data):
         """
-        constructeur
+        Constructor.
 
-        :param data:
+        Args:
+            data (Data): The data access instance.
+
         """
+        # Add CORS middleware to allow cross-origin requests
         self.app.add_middleware(
             CORSMiddleware,
-            allow_origins=[API_CORS_ORIGINS],
+            allow_origins=API_CORS_ORIGINS,
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
@@ -31,26 +51,32 @@ class General_Controller:
     @classmethod
     def setup_routes(cls):
         """
-        appel des routes d'api de chaque fichiers d'api
+        Setup routes for API endpoints.
 
-        :return:
         """
+        # Setup routes for API_Menus and API_Utils
         API_Menus.setup_routes(cls.app)
-        print(" - Routes de API_Menus configurées.")
+        print(" - Routes for API_Menus configured.")
         API_Utils.setup_routes(cls.app)
-        print(" - Routes de Api_Utils configurées.")
+        print(" - Routes for API_Utils configured.")
 
     def data_transmission(self):
         """
-        transmet les données pour l'api
+        Transmit data to the API.
 
-        :return:
         """
+        # Transmit data to API_Menus and API_Utils
         API_Menus.data_transmission(self.data)
-        print(" - Données transmises à API_Menus.")
+        print(" - Data transmitted to API_Menus.")
         API_Utils.data_transmission(self.data)
-        print(" - Données transmises à API_Utils.")
-
+        print(" - Data transmitted to API_Utils.")
 
     def getApp(self):
+        """
+        Get the FastAPI application instance.
+
+        Returns:
+            FastAPI: The FastAPI application instance.
+
+        """
         return self.app
