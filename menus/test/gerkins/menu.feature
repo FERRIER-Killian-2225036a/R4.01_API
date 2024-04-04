@@ -11,8 +11,9 @@ Feature: Menu has crud operations on the database
     Given API is running
     Given A Menu exists in the database
     When We try to read a Menu
-    Then Status code is "200"
     Then Menu is retrieved from the database in the response
+    Then Status code is "200"
+    #Then Menu is retrieved from the database in the response
 
 
   Scenario: Menu can be updated

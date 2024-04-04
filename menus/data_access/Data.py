@@ -15,7 +15,6 @@ class Data(metaclass=Singleton):
 
     def __init__(self, file_path=SAVE_FILE):
         self.file_path = file_path
-
         self.data_access = sqlite3.connect('file:' + self.file_path, uri=True,
                                            detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
 
@@ -40,8 +39,8 @@ class Data(metaclass=Singleton):
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         utilisateur_id INTEGER UNIQUE NOT NULL,
                         dishes TEXT UNIQUE NOT NULL,
-                        date_creation DATE NOT NULL,
-                        date_modification DATE NOT NULL
+                        date_creation VARCHAR NOT NULL,
+                        date_modification VARCHAR NOT NULL
                     );
                 """
             )
