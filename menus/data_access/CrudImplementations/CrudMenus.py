@@ -9,16 +9,13 @@ from model_types.Menu import Menu
 class CrudMenus(CrudInterface):
 
     def create(self, object_instance: Menu):
-        # Dish existe sur l'api ??
         dish_of_menu = object_instance.dict()["dishes"]
-
         dishes_list = requests.get(DISHES_AND_USER_API_ADRESS + "/list/").json()["dishes"]
 
         if len(dishes_list) == 0:
             for dish in dish_of_menu:
                 requests.post(DISHES_AND_USER_API_ADRESS,
                               json={"id": 0, "description": dish["description"], "price": dish["price"]})
-
         else:
             for dish in dish_of_menu:
                 present_in_api = False
@@ -27,7 +24,6 @@ class CrudMenus(CrudInterface):
                         present_in_api = True
                         break
                 if not present_in_api:
-                    print('Le plat', dish["description"], 'n\'est pas présent dans l\'API. Ajout en cours...')
                     requests.post(DISHES_AND_USER_API_ADRESS,
                                   json={"id": 0, "description": dish["description"], "price": dish["price"]})
 
