@@ -16,7 +16,6 @@ def step_create_user(context):
                                                           "date_creation": "03/03/2024",
                                                           "date_modification": "03/03/2024"
                                                           })
-    print("rep jttp" ,context.response.json())
 
 
 @then('Menu is created in the database')
@@ -31,7 +30,6 @@ def step_read_user(context):
 
 @then("Menu is retrieved from the database in the response")
 def step_user_readed(context):
-    print(context.response.json())
     assert "menu readed with success" in context.response.json()["message"]
     assert context.response.json()["menu"]["utilisateur_id"] == 1
     assert context.response.json()["menu"]["dishes"] == [{"description": "chien", "price": 2}, {"description": "chat", "price": 4}]
@@ -44,9 +42,7 @@ def step_user_readed(context):
 def step_user_exist(context):
     menu = Menu(id=1, utilisateur_id=1, dishes=[{"description": "chien", "price": 2}, {"description": "chat", "price": 4}]
                 , date_creation="03/03/2024", date_modification="03/03/2024")
-    print(menu.dict())
-    res = context.client.post("/Menu", json=menu.dict())
-    print(res)
+    context.client.post("/Menu", json=menu.dict())
 
 
 @when("We try to update the Menu")

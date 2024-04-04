@@ -6,10 +6,6 @@ from model_types.Menu import Menu
 class CrudMenus(CrudInterface):
 
     def create(self, object_instance: Menu):
-        print("type:", str(object_instance.dishes))
-        dishes_string = object_instance.dict()["dishes"]
-        print(type(dishes_string),str(dishes_string))
-        #todo verif type dishes -> a transformer de json vers str
         sql = "INSERT INTO MENU (utilisateur_id, dishes, date_creation, date_modification) VALUES (?, ?, ?, ?);"
         self.data_access.execute(sql, (object_instance.utilisateur_id,
                                        str(object_instance.dict()["dishes"]),
@@ -19,16 +15,13 @@ class CrudMenus(CrudInterface):
 
     def read(self, object_id: int):
         sql = "SELECT * FROM MENU WHERE ID = ?;"
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         result = self.data_access.execute(sql, (object_id,))
         result = result.fetchone()
         if result:
-
-            print(type(eval(result[2])[1]))
             menu = Menu(id=result[0], utilisateur_id=result[1],
                         dishes=[Dish(description=str(el["description"]),
                                      price=float(el["price"])) for el in eval(result[2])],
-                        date_creation=result[2], date_modification=result[2])
+                        date_creation=result[3], date_modification=result[4])
             return menu
         else:
             return None
