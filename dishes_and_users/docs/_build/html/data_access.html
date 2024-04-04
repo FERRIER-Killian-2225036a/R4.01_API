@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_access package &mdash; MicroServices Dish And User  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="main module" href="main.html" />
+    <link rel="prev" title="core package" href="core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MicroServices Dish And User
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">dishes_and_users</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="API_controller.html">API_controller package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">data_access package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-data_access.CrudInterface">data_access.CrudInterface module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data_access.CrudInterface.CrudInterface"><code class="docutils literal notranslate"><span class="pre">CrudInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-data_access.Data">data_access.Data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-access-module">Data Access Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data_access.Data.Data"><code class="docutils literal notranslate"><span class="pre">Data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-data_access.Singleton">data_access.Singleton module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data_access.Singleton.Singleton"><code class="docutils literal notranslate"><span class="pre">Singleton</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-data_access">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_types.html">model_types package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MicroServices Dish And User</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">dishes_and_users</a></li>
+      <li class="breadcrumb-item active">data_access package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/data_access.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-access-package">
+<h1>data_access package<a class="headerlink" href="#data-access-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-data_access.CrudInterface">
+<span id="data-access-crudinterface-module"></span><h2>data_access.CrudInterface module<a class="headerlink" href="#module-data_access.CrudInterface" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_access.CrudInterface.</span></span><span class="sig-name descname"><span class="pre">CrudInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_access</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<section id="crud-interface">
+<h3>CRUD Interface<a class="headerlink" href="#crud-interface" title="Link to this heading"></a></h3>
+<p>This class provides an interface for CRUD operations on database objects.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>data_access (sqlite3.Connection): Connection to the SQLite database.</p>
+</dd>
+<dt>Methods:</dt><dd><p>__init__(): Initializes the CrudInterface instance.
+is_object_exist(): Checks if an object with the given ID exists in the specified table.
+create(): Creates a new object in the database.
+read(): Retrieves an object from the database by ID.
+update(): Updates an object in the database.
+delete(): Deletes an object from the database.
+list(): Retrieves a list of all objects from the database.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.create" title="Link to this definition"></a></dt>
+<dd><p>Creates a new object in the database.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>object_instance (object): The object to create in the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.data_access">
+<span class="sig-name descname"><span class="pre">data_access</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Connection</span></em><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.data_access" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.delete" title="Link to this definition"></a></dt>
+<dd><p>Deletes an object from the database.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>object_id (int): The ID of the object to delete from the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.is_object_exist">
+<span class="sig-name descname"><span class="pre">is_object_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'USER'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'DISH'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface.is_object_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.is_object_exist" title="Link to this definition"></a></dt>
+<dd><p>Checks if an object with the given ID exists in the specified table.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>object_id (int): The ID of the object to check.
+table (Literal[“USER”, “DISH”]): The table to search for the object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if the object exists, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.list" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a list of all objects from the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.read" title="Link to this definition"></a></dt>
+<dd><p>Retrieves an object from the database by ID.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>object_id (int): The ID of the object to retrieve from the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.CrudInterface.CrudInterface.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/CrudInterface.html#CrudInterface.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.CrudInterface.CrudInterface.update" title="Link to this definition"></a></dt>
+<dd><p>Updates an object in the database.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>object_id (int): The ID of the object to update.
+object_instance (object): The updated object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-data_access.Data">
+<span id="data-access-data-module"></span><h2>data_access.Data module<a class="headerlink" href="#module-data_access.Data" title="Link to this heading"></a></h2>
+<section id="data-access-module">
+<h3>Data Access Module<a class="headerlink" href="#data-access-module" title="Link to this heading"></a></h3>
+<p>This module provides access to data storage and operations.</p>
+<p>It includes classes and functions for interacting with the database, performing CRUD operations,
+and managing authentication.</p>
+<dl class="simple">
+<dt>Imports:</dt><dd><ul class="simple">
+<li><p>sqlite3: Library for SQLite database operations.</p></li>
+<li><p>Literal: Type hint for specifying literal values.</p></li>
+<li><p>SAVE_FILE: Constant for the path to the SQLite database file.</p></li>
+<li><p>AuthenticationManager: Class for managing user authentication.</p></li>
+<li><p>CrudDishes: Class for CRUD operations on Dish objects.</p></li>
+<li><p>CrudUsers: Class for CRUD operations on User objects.</p></li>
+<li><p>Singleton: Metaclass for implementing the Singleton design pattern.</p></li>
+<li><p>Dish: Class representing a dish object.</p></li>
+<li><p>User: Class representing a user object.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="data_access.Data.Data">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_access.Data.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data_access/Data.html#Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.Data.Data" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<section id="data-class">
+<h3>Data Class<a class="headerlink" href="#data-class" title="Link to this heading"></a></h3>
+<p>This class provides access to data storage and operations.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>file_path (str): The path to the SQLite database file.
+data_access (sqlite3.Connection): Connection to the SQLite database.
+crud_dish (CrudDishes): CRUD operations for Dish objects.
+crud_user (CrudUsers): CRUD operations for User objects.
+authentication_manager (AuthenticationManager): Manages user authentication.</p>
+</dd>
+<dt>Methods:</dt><dd><p>tables_exist(): Checks if the necessary tables exist in the database.
+create_tables(): Creates necessary tables if they don’t exist.
+ORM(): Object-Relational Mapping function for CRUD operations and authentication.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.Data.Data.ORM">
+<span class="sig-name descname"><span class="pre">ORM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'CREATE'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'READ'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'UPDATE'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'DELETE'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'AUTHENTICATE'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'LIST'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'DISH'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'USER'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="model_types.html#model_types.Dish.Dish" title="model_types.Dish.Dish"><span class="pre">Dish</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model_types.html#model_types.User.User" title="model_types.User.User"><span class="pre">User</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">any</span></span></span><a class="reference internal" href="_modules/data_access/Data.html#Data.ORM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.Data.Data.ORM" title="Link to this definition"></a></dt>
+<dd><p>Object-Relational Mapping function for CRUD operations and authentication.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>method (Literal[“CREATE”, “READ”, “UPDATE”, “DELETE”, “AUTHENTICATE”, “LIST”]):</dt><dd><p>CRUD operation or authentication method to perform.</p>
+</dd>
+<dt>object_type (Literal[“DISH”, “USER”] | None, optional):</dt><dd><p>Type of object to operate on (DISH or USER). Defaults to None.</p>
+</dd>
+<dt>object_instance (Dish | User | None, optional):</dt><dd><p>Instance of Dish or User for create/update operations. Defaults to None.</p>
+</dd>
+<dt>object_id (int | None, optional):</dt><dd><p>ID of the object for read/update/delete operations. Defaults to None.</p>
+</dd>
+<dt>credentials ((str | None, str | None), optional):</dt><dd><p>User login and password for authentication. Defaults to (None, None).</p>
+</dd>
+</dl>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If incorrect parameters are provided.</p>
+</dd>
+<dt>Returns:</dt><dd><p>any: The result of the CRUD operation or authentication.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data_access.Data.Data.authentication_manager">
+<span class="sig-name descname"><span class="pre">authentication_manager</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AuthenticationManager</span></em><a class="headerlink" href="#data_access.Data.Data.authentication_manager" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.Data.Data.create_tables">
+<span class="sig-name descname"><span class="pre">create_tables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/data_access/Data.html#Data.create_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.Data.Data.create_tables" title="Link to this definition"></a></dt>
+<dd><p>Creates necessary tables if they don’t exist.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data_access.Data.Data.crud_dish">
+<span class="sig-name descname"><span class="pre">crud_dish</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">CrudDishes</span></em><a class="headerlink" href="#data_access.Data.Data.crud_dish" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data_access.Data.Data.crud_user">
+<span class="sig-name descname"><span class="pre">crud_user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">CrudUsers</span></em><a class="headerlink" href="#data_access.Data.Data.crud_user" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data_access.Data.Data.data_access">
+<span class="sig-name descname"><span class="pre">data_access</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Connection</span></em><a class="headerlink" href="#data_access.Data.Data.data_access" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data_access.Data.Data.file_path">
+<span class="sig-name descname"><span class="pre">file_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#data_access.Data.Data.file_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data_access.Data.Data.tables_exist">
+<span class="sig-name descname"><span class="pre">tables_exist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data_access/Data.html#Data.tables_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.Data.Data.tables_exist" title="Link to this definition"></a></dt>
+<dd><p>Checks if necessary tables exist in the database.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>bool: True if tables exist, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-data_access.Singleton">
+<span id="data-access-singleton-module"></span><h2>data_access.Singleton module<a class="headerlink" href="#module-data_access.Singleton" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="data_access.Singleton.Singleton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_access.Singleton.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><a class="reference internal" href="_modules/data_access/Singleton.html#Singleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_access.Singleton.Singleton" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<section id="singleton-metaclass">
+<h3>Singleton Metaclass<a class="headerlink" href="#singleton-metaclass" title="Link to this heading"></a></h3>
+<p>This metaclass implements the Singleton design pattern.</p>
+<dl class="simple">
+<dt>Usage:</dt><dd><dl class="simple">
+<dt>class YourClass(metaclass=Singleton):</dt><dd><p>pass</p>
+</dd>
+</dl>
+</dd>
+<dt>Attributes:</dt><dd><p>_instances (dict): Dictionary to store instances of classes.</p>
+</dd>
+<dt>Methods:</dt><dd><p>__call__(): Method to create and return a single instance of the class.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-data_access">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-data_access" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="core.html" class="btn btn-neutral float-left" title="core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="main.html" class="btn btn-neutral float-right" title="main module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tom Carvajal.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
