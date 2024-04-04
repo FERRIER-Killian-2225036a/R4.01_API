@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from menus.model_types.Dish import Dish
+from model_types.Dish import Dish
 
 
 class Menu(BaseModel):
