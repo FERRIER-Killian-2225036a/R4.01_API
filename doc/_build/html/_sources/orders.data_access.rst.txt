@@ -1,0 +1,37 @@
+orders.data\_access package
+===========================
+
+Submodules
+----------
+
+orders.data\_access.CreateData module
+-------------------------------------
+
+.. automodule:: orders.data_access.CreateData
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+orders.data\_access.Data module
+-------------------------------
+
+.. automodule:: orders.data_access.Data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+orders.data\_access.Singleton module
+------------------------------------
+
+.. automodule:: orders.data_access.Singleton
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: orders.data_access
+   :members:
+   :undoc-members:
+   :show-inheritance:

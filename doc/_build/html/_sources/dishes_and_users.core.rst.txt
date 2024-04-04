@@ -1,0 +1,21 @@
+dishes\_and\_users.core package
+===============================
+
+Submodules
+----------
+
+dishes\_and\_users.core.config module
+-------------------------------------
+
+.. automodule:: dishes_and_users.core.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dishes_and_users.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

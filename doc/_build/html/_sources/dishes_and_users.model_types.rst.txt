@@ -1,0 +1,29 @@
+dishes\_and\_users.model\_types package
+=======================================
+
+Submodules
+----------
+
+dishes\_and\_users.model\_types.Dish module
+-------------------------------------------
+
+.. automodule:: dishes_and_users.model_types.Dish
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dishes\_and\_users.model\_types.User module
+-------------------------------------------
+
+.. automodule:: dishes_and_users.model_types.User
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dishes_and_users.model_types
+   :members:
+   :undoc-members:
+   :show-inheritance:

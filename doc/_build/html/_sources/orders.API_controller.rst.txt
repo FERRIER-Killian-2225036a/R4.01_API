@@ -1,0 +1,29 @@
+orders.API\_controller package
+==============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   orders.API_controller.API
+
+Submodules
+----------
+
+orders.API\_controller.General\_Controller module
+-------------------------------------------------
+
+.. automodule:: orders.API_controller.General_Controller
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: orders.API_controller
+   :members:
+   :undoc-members:
+   :show-inheritance:

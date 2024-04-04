@@ -1,0 +1,29 @@
+menus.model\_types package
+==========================
+
+Submodules
+----------
+
+menus.model\_types.Dish module
+------------------------------
+
+.. automodule:: menus.model_types.Dish
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+menus.model\_types.Menu module
+------------------------------
+
+.. automodule:: menus.model_types.Menu
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: menus.model_types
+   :members:
+   :undoc-members:
+   :show-inheritance:

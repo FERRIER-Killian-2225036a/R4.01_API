@@ -1,0 +1,29 @@
+menus.API\_controller package
+=============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   menus.API_controller.API
+
+Submodules
+----------
+
+menus.API\_controller.General\_Controller module
+------------------------------------------------
+
+.. automodule:: menus.API_controller.General_Controller
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: menus.API_controller
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,32 @@
+dishes\_and\_users package
+==========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dishes_and_users.API_controller
+   dishes_and_users.core
+   dishes_and_users.data_access
+   dishes_and_users.model_types
+
+Submodules
+----------
+
+dishes\_and\_users.main module
+------------------------------
+
+.. automodule:: dishes_and_users.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dishes_and_users
+   :members:
+   :undoc-members:
+   :show-inheritance:

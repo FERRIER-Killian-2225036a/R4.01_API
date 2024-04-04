@@ -1,0 +1,29 @@
+menus.API\_controller.API package
+=================================
+
+Submodules
+----------
+
+menus.API\_controller.API.API\_Menus module
+-------------------------------------------
+
+.. automodule:: menus.API_controller.API.API_Menus
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+menus.API\_controller.API.API\_Utils module
+-------------------------------------------
+
+.. automodule:: menus.API_controller.API.API_Utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: menus.API_controller.API
+   :members:
+   :undoc-members:
+   :show-inheritance:

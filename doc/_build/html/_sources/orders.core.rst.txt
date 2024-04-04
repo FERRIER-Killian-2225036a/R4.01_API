@@ -1,0 +1,21 @@
+orders.core package
+===================
+
+Submodules
+----------
+
+orders.core.config module
+-------------------------
+
+.. automodule:: orders.core.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: orders.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

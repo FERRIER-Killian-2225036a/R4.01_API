@@ -1,0 +1,21 @@
+menus.core package
+==================
+
+Submodules
+----------
+
+menus.core.config module
+------------------------
+
+.. automodule:: menus.core.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: menus.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

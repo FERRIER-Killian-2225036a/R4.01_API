@@ -1,0 +1,29 @@
+dishes\_and\_users.API\_controller package
+==========================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   dishes_and_users.API_controller.API
+
+Submodules
+----------
+
+dishes\_and\_users.API\_controller.General\_Controller module
+-------------------------------------------------------------
+
+.. automodule:: dishes_and_users.API_controller.General_Controller
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dishes_and_users.API_controller
+   :members:
+   :undoc-members:
+   :show-inheritance:

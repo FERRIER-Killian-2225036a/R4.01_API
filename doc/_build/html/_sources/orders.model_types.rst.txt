@@ -1,0 +1,29 @@
+orders.model\_types package
+===========================
+
+Submodules
+----------
+
+orders.model\_types.Localisation module
+---------------------------------------
+
+.. automodule:: orders.model_types.Localisation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+orders.model\_types.Order module
+--------------------------------
+
+.. automodule:: orders.model_types.Order
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: orders.model_types
+   :members:
+   :undoc-members:
+   :show-inheritance:

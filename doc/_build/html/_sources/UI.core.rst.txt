@@ -1,0 +1,21 @@
+UI.core package
+===============
+
+Submodules
+----------
+
+UI.core.config module
+---------------------
+
+.. automodule:: UI.core.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: UI.core
+   :members:
+   :undoc-members:
+   :show-inheritance:

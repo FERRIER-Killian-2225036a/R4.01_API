@@ -1,0 +1,32 @@
+menus package
+=============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   menus.API_controller
+   menus.core
+   menus.data_access
+   menus.model_types
+
+Submodules
+----------
+
+menus.main module
+-----------------
+
+.. automodule:: menus.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: menus
+   :members:
+   :undoc-members:
+   :show-inheritance:

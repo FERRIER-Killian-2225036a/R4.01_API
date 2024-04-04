@@ -1,0 +1,29 @@
+UI package
+==========
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   UI.core
+
+Submodules
+----------
+
+UI.main module
+--------------
+
+.. automodule:: UI.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: UI
+   :members:
+   :undoc-members:
+   :show-inheritance:

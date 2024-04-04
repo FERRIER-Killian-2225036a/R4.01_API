@@ -1,0 +1,37 @@
+menus.data\_access package
+==========================
+
+Submodules
+----------
+
+menus.data\_access.CrudInterface module
+---------------------------------------
+
+.. automodule:: menus.data_access.CrudInterface
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+menus.data\_access.Data module
+------------------------------
+
+.. automodule:: menus.data_access.Data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+menus.data\_access.Singleton module
+-----------------------------------
+
+.. automodule:: menus.data_access.Singleton
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: menus.data_access
+   :members:
+   :undoc-members:
+   :show-inheritance:

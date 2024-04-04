@@ -1,0 +1,37 @@
+dishes\_and\_users.API\_controller.API package
+==============================================
+
+Submodules
+----------
+
+dishes\_and\_users.API\_controller.API.API\_Dishes module
+---------------------------------------------------------
+
+.. automodule:: dishes_and_users.API_controller.API.API_Dishes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dishes\_and\_users.API\_controller.API.API\_Users module
+--------------------------------------------------------
+
+.. automodule:: dishes_and_users.API_controller.API.API_Users
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dishes\_and\_users.API\_controller.API.API\_Utils module
+--------------------------------------------------------
+
+.. automodule:: dishes_and_users.API_controller.API.API_Utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dishes_and_users.API_controller.API
+   :members:
+   :undoc-members:
+   :show-inheritance:

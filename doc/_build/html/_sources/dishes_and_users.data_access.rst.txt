@@ -1,0 +1,37 @@
+dishes\_and\_users.data\_access package
+=======================================
+
+Submodules
+----------
+
+dishes\_and\_users.data\_access.CrudInterface module
+----------------------------------------------------
+
+.. automodule:: dishes_and_users.data_access.CrudInterface
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dishes\_and\_users.data\_access.Data module
+-------------------------------------------
+
+.. automodule:: dishes_and_users.data_access.Data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dishes\_and\_users.data\_access.Singleton module
+------------------------------------------------
+
+.. automodule:: dishes_and_users.data_access.Singleton
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dishes_and_users.data_access
+   :members:
+   :undoc-members:
+   :show-inheritance:
