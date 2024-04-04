@@ -80,18 +80,29 @@ class CrudMenus(CrudInterface):
 
         """
         sql = "SELECT * FROM MENU WHERE ID = ?;"
-        request_responseult = self.data_access.execute(sql, (object_id,))
-        request_responseult = request_responseult.fetchone()
-        if request_responseult:
-            menu = Menu(id=request_responseult[0], utilisateur_id=request_responseult[1],
+        sql_tuples = self.data_access.execute(sql, (object_id,))
+        sql_tuple = sql_tuples.fetchone()
+        if sql_tuple:
+            menu = Menu(id=sql_tuple[0], utilisateur_id=sql_tuple[1],
                         dishes=[Dish(description=str(el["description"]), price=float(el["price"])) for el in
-                                eval(request_responseult[2])], date_creation=request_responseult[3],
-                        date_modification=request_responseult[4])
+                                eval(sql_tuple[2])], date_creation=sql_tuple[3],
+                        date_modification=sql_tuple[4])
             return menu
         else:
             return None
 
     def update(self, object_id: int, object_instance: Menu):
+        """
+        Met à jour un Menu dans la base de données.
+
+        Args:
+            object_id (int): L'identifiant du Menu à mettre à jour.
+            object_instance (Menu): L'instance Menu mise à jour.
+
+        Raises:
+            ValueError: Si l'object_id n'apparaît pas dans la table MENU.
+
+        """
         if not self.is_object_exist(object_id, "MENU"):
             raise ValueError("This object_id doesn't appear in table MENU")
         sql = "UPDATE MENU SET utilisateur_id = ?, dishes = ?, date_creation = ?, date_modification = ? WHERE ID = ?;"
@@ -101,8 +112,39 @@ class CrudMenus(CrudInterface):
         self.data_access.commit()
 
     def delete(self, object_id: int):
+        """
+        Supprime un Menu de la base de données.
+
+        Args:
+            object_id (int): L'identifiant du Menu à supprimer.
+
+        Raises:
+            ValueError: Si l'object_id n'apparaît pas dans la table MENU.
+
+        """
         if not self.is_object_exist(object_id, "MENU"):
             raise ValueError("This object_id doesn't appear in table MENU")
         sql = "DELETE FROM MENU WHERE ID = ?;"
         self.data_access.execute(sql, (object_id,))
         self.data_access.commit()
+
+    def list(self):
+        """
+        Récupère la liste de tous les Menus dans la base de données.
+
+        Returns:
+            list[Menu]: Liste de tous les Menus dans la base de données.
+
+        """
+        sql = "SELECT * FROM MENU ;"
+        result = self.data_access.execute(sql).fetchall()
+        list_menu = []
+        if result is not None and result is not []:
+            for el in result:
+                list_menu.append(Menu(id=el[0], utilisateur_id=el[1],
+                                      dishes=[Dish(description=str(el["description"]), price=float(el["price"])) for el
+                                              in
+                                              eval(el[2])], date_creation=el[3],
+                                      date_modification=el[4]))
+
+        return list_menu

@@ -170,3 +170,25 @@ async def options_root(id: int):
         "Allow": ", ".join(allowed_methods)
     }
     return JSONResponse(content=None, headers=headers)
+
+
+@router.get("/Menu/list/")
+async def list_dish():
+    """
+    Récupère la liste de tous les Menus dans la base de données.
+
+    Returns:
+        dict: Un dictionnaire contenant le message de succès et la liste des Menus.
+
+    Raises:
+        HTTPException: Si une erreur se produit lors de la récupération de la liste des Menus.
+
+    """
+    try:
+        list_menu = data_instance.ORM("LIST", Menu.__name__.upper())
+        if list_menu is None or list_menu == []:
+            raise ValueError("no dishes in the database")
+        return {"message": "dishes listed with success",
+                "menu": list_menu}
+    except Exception as e:
+        raise HTTPException(status_code=412, detail=str(e))

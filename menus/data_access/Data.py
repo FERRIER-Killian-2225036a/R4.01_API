@@ -144,5 +144,10 @@ class Data(metaclass=Singleton):
                 if object_id is None:
                     raise ValueError("No object_id parameters for method Delete")
                 return crud_function.delete(object_id)
+            case 'LIST':
+                try:
+                    return crud_function.list()
+                except Exception as e:
+                    raise ValueError("No tuples in this table" + str(e))
             case _:
                 raise ValueError("Method not allowed")
