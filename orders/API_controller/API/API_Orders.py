@@ -4,7 +4,7 @@ Fichier permettant la gestion des URL de la classe Order
 """
 
 from data_access.Data import Data
-from orders.model_types.Order import Order
+from model_types.Order import Order
 from fastapi import APIRouter, HTTPException
 
 router = APIRouter()

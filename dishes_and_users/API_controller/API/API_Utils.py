@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, HTTPException
 from data_access.Data import Data
 from core.config import AUTHOR, VERSION
-from model_types.Dish import Dish
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -43,4 +43,12 @@ async def auth(request: Request):
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
 
+
+@router.options("/auth")
+async def options_root():
+    allowed_methods = ["POST", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)
 
