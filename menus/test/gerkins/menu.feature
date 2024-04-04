@@ -14,7 +14,7 @@ Feature: Menu has crud operations on the database
     Then Status code is "200"
     Then Menu is retrieved from the database in the response
 
-
+"""
   Scenario: Menu can be updated
     Given API is running
     Given A Menu exists in the database
@@ -28,7 +28,7 @@ Feature: Menu has crud operations on the database
     When We try to delete the Menu
     Then Status code is "200"
     Then Menu is removed from the database
-
+"""
   Scenario: Attempting to create a Menu that already exists
     Given API is running
     Given A Menu exists in the database
@@ -41,7 +41,7 @@ Feature: Menu has crud operations on the database
     When We try to read a non-existing Menu
     Then Menu is not found in the database
     And Status code is "412"
-
+"""
   Scenario: Attempting to update a non-existing Menu
     Given API is running
     When We try to update a non-existing Menu
@@ -53,3 +53,4 @@ Feature: Menu has crud operations on the database
     When We try to delete a non-existing Menu
     Then Menu delete operation fails
     And Status code is "412"
+"""

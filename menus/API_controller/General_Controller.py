@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from API_controller.API import API_Menus, API_Utils
 from data_access.Data import Data
-
+from starlette.middleware.cors import CORSMiddleware
+from core.config import API_CORS_ORIGINS
+from fastapi.responses import JSONResponse
 
 class General_Controller:
     """
@@ -17,7 +19,13 @@ class General_Controller:
 
         :param data:
         """
-
+        self.app.add_middleware(
+            CORSMiddleware,
+            allow_origins=[API_CORS_ORIGINS],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
         self.data = data
 
     @classmethod

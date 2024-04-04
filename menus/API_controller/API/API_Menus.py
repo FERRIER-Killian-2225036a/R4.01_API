@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 
 from data_access.Data import Data
 from model_types.Menu import Menu
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 data_instance: Data | None = None
@@ -59,3 +60,19 @@ def delete_menu(id: int):
         return {"message": "menu deleted with success"}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
+
+@router.options("/Menu")
+async def options_root():
+    allowed_methods = ["POST", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)
+
+@router.options("/Menu/{id}")
+async def options_root(id: int):
+    allowed_methods = ["GET","PUT","DELETE", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)

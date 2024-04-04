@@ -1,6 +1,7 @@
 from fastapi import APIRouter,Request
 from data_access.Data import Data
 from core.config import AUTHOR, VERSION
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 data_instance: Data | None = None

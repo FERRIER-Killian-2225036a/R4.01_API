@@ -49,7 +49,7 @@ def step_user_exist(context):
 def step_update_user(context):
     context.response = context.client.put("/Menu/1", json={"id": 1,
                                                            "utilisateur_id": "1",
-                                                           "dishes": "aaaaa",  ##TODO
+                                                           "dishes": [{"description": "chien", "price": 2}, {"description": "chat", "price": 4}],
                                                            "date_creation": "03/03/2024",
                                                            "date_modification": "03/03/2024"
                                                            })
@@ -60,7 +60,7 @@ def step_user_updated(context):
     assert "menu updated with success" in context.response.json()["message"]
     context.response_temp = context.client.get("/Menu/1")
     assert context.response.json()["menu"]["utilisateur_id"] == 1
-    assert context.response.json()["menu"]["dishes"] == "DISHES"  # TODO
+    assert context.response.json()["menu"]["dishes"] == [{"description": "chien", "price": 2}, {"description": "chat", "price": 4}]
     assert context.response.json()["menu"]["date_creation"] == "03/03/2024"
     assert context.response.json()["menu"]["date_modification"] == "03/03/2024"
 
@@ -82,7 +82,7 @@ def step_user_deleted(context):
 def step_user_already_exist(context):
     context.response = context.client.post("/Menu", json={"id": 1,
                                                           "utilisateur_id": "1",
-                                                          "dishes": "aaaaa",  ##TODO
+                                                          "dishes": [{"description": "chien", "price": 2}, {"description": "chat", "price": 4}],
                                                           "date_creation": "03/03/2024",
                                                           "date_modification": "03/03/2024"
                                                           })
@@ -107,7 +107,7 @@ def step_impl(context):
 def step_impl(context):
     context.response = context.client.put("/Menu/2", json={"id": 1,
                                                            "utilisateur_id": "1",
-                                                           "dishes": "aaaaa",  ##TODO
+                                                           "dishes": [{"description": "chien", "price": 2}, {"description": "chat", "price": 4}],
                                                            "date_creation": "03/03/2024",
                                                            "date_modification": "03/03/2024"
                                                            })
