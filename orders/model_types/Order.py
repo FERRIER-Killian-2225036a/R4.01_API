@@ -4,7 +4,7 @@ Classe représentant une commande
 """
 
 from pydantic import BaseModel
-from orders.model_types.Localisation import Localisation
+from model_types.Localisation import Localisation
 from datetime import datetime
 
 
