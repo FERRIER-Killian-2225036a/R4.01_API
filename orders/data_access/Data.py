@@ -40,7 +40,8 @@ class Data(metaclass=Singleton):
             """
             methodes permettant d'ajouter une localisation dans la table Localisation
 
-            :param: localisation
+            :param: localisation objet
+            :param loc_id: Id de la localisation
 
             """
             sql = "INSERT INTO Localisation (localisation_id, address, city, postal_code) VALUES (?, ?, ?, ?);"
@@ -126,7 +127,7 @@ class Data(metaclass=Singleton):
 
         """
 
-        def create_menusOfOrder(object: (int, int, int)) -> int:
+        def create_menusOfOrder(tuple: (int, int, int)) -> int:
             """
             methodes permettant d'ajouter un menu dans la table menusOfOrder
 
@@ -135,9 +136,9 @@ class Data(metaclass=Singleton):
 
             """
             sql = "INSERT INTO MenusOfOrder (command_id, menu_id, quantity) VALUES (?, ?, ?);"
-            self.data_access.execute(sql, (object[0], object[1], object[2]))
+            self.data_access.execute(sql, (tuple[0], tuple[1], tuple[2]))
             self.data_access.commit()
-            return object[0]
+            return tuple[0]
 
         def read_menusOfOrder(object_id: int) -> list[int]:
             """
@@ -181,7 +182,9 @@ class Data(metaclass=Singleton):
                 else:
                     return delete_menusOfOrder(object_id)
 
-    def order_CRUD(self, method: str, object=None | Order, object_id=None | int) -> Order:
+    def order_CRUD(self, method: str,
+                   object_instance:None | Order =None,
+                   object_id:int | None = None) -> Order:
         """
         methodes du CRUD pour la table Order
 
@@ -227,17 +230,17 @@ class Data(metaclass=Singleton):
             return Order(command_id=object_id, menus_id=read_menus_id, user_id=order_read[0],
                          localisation=read_loc_format, price=order_read[2], date=order_read[3])
 
-        def update_order(object_id: int, object: Order):
+        def update_order(object_id: int, order: Order):
             """
             methodes permettant de mettre à jour une commande dans la table Order
 
             """
             sql = "UPDATE Orders SET user_id=?, localisation_id=?, price=?, date=? WHERE command_id=?;"
-            self.localisation_CRUD("UPDATE", object.localisation, object.localisation.localisation_id)
-            self.data_access.execute(sql, (object.user_id, object.localisation.localisation_id,
-                                           object.price, object.date, object_id))
+            self.localisation_CRUD("UPDATE", order.localisation, order.localisation.localisation_id)
+            self.data_access.execute(sql, (order.user_id, order.localisation.localisation_id,
+                                           order.price, order.date, object_id))
             self.data_access.commit()
-            return object
+            return order
 
         def delete_order(object_id: int):
             """
@@ -256,10 +259,10 @@ class Data(metaclass=Singleton):
 
         match method:
             case "CREATE":
-                if object is None:
+                if object_instance is None:
                     raise ValueError("Erreur lors création commande (objet null)")
                 else:
-                    return create_order(object)
+                    return create_order(object_instance)
             case "READ":
                 if object_id is None:
                     raise ValueError("Erreur lors lecture commande (id null)")
@@ -268,10 +271,10 @@ class Data(metaclass=Singleton):
             case "UPDATE":
                 if object_id is None:
                     raise ValueError("Erreur lors modification commande (id null)")
-                if object is None:
+                if object_instance is None:
                     raise ValueError("Erreur lors modification commande (objet null)")
                 else:
-                    return update_order(object_id, object)
+                    return update_order(object_id, object_instance)
             case "DELETE":
                 if object_id is None:
                     raise ValueError("Erreur lors suppression commande (id null)")

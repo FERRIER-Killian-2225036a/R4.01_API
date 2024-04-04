@@ -32,7 +32,7 @@ def welcome():
 @router.get("/order/{order_id}")
 def read_order(order_id: int):
     try:
-        order = data_instance.order_CRUD("READ", Order.__name__.upper(), object_id=id)
+        order = data_instance.order_CRUD("READ", object_id=order_id)
         return {"message": "La commande a été lue avec succès. ", "Commande": order}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
@@ -46,8 +46,8 @@ def create_order(order: Order):
     :param order: les informations de la commande
     """
     try:
-        data_instance.order_CRUD("CREATE", Order.__name__.upper(), object_instance=order)
-        return {"message": "La commande a été crée"}
+        data_instance.order_CRUD("CREATE", object_instance=order)
+        return {"message": "La commande a été créée"}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
 
@@ -61,7 +61,7 @@ def update_order(order_id: int, order: Order):
     :param order: les nouvelles informations de la commande
     """
     try:
-        data_instance.order_CRUD("UPDATE", Order.__name__.upper(), object_id=id, object_instance=order)
+        data_instance.order_CRUD("UPDATE", object_id=order_id, object_instance=order)
         return {"message": "Commande mise à jour avec succès"}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
@@ -75,7 +75,7 @@ def delete_order(order_id: int):
     :param order_id: l'identifiant de la commande à supprimer
     """
     try:
-        data_instance.order_CRUD("DELETE", Order.__name__.upper(), object_id=id)
+        data_instance.order_CRUD("DELETE", object_id=order_id)
         return {"message": "Commande supprimée avec succès"}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))

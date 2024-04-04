@@ -5,20 +5,21 @@ Fichier contenant les classes de test de l'API (routes)
 import unittest
 from fastapi.testclient import TestClient
 
+from UI.main import app
 from core.config import FICHIER_SAUVEGARDE
 from data_access.Data import Data
 from model_types.Localisation import Localisation
 
 
-class TestOrderRoutes(unittest.TestCase):
+class Test_ApiOrders(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
         Initialisation avant les tests
         """
-        cls.client = TestClient()
+        cls.client = TestClient(app)
         cls.data = Data(FICHIER_SAUVEGARDE)
-        cls.data_transmission(cls.data)
+
 
     def test_welcome_route(self):
         """

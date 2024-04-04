@@ -33,7 +33,12 @@ class Test_DataMenusOfOrder(unittest.TestCase):
         """
         Test unitaire : Création tuple table MenusOfOrder
         """
-        loc = Localisation(localisation_id=1, address='a', city='Aix', postal_code=13100)
+        loc = {
+            "localisation_id": 1,
+            "address": 'a',
+            "city": 'Aix',
+            "postal_code": 13100
+        }
         order = Order(command_id=1, menus_id=[1, 2], user_id=1, localisation=loc, price=100.0, date="2022-04-01")
         created_order = self.data.order_CRUD("CREATE", order)
         # Ajout d'un menu à la commande
