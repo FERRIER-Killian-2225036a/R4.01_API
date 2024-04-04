@@ -1,10 +1,10 @@
 import sqlite3
 
-from menus.data_access.CrudImplementations.CrudMenus import CrudMenus
-from menus.data_access.Singleton import Singleton
-from menus.core.config import SAVE_FILE
-from menus.model_types.Menu import Menu
-from menus.model_types.Dish import Dish
+from data_access.CrudImplementations.CrudMenus import CrudMenus
+from data_access.Singleton import Singleton
+from core.config import SAVE_FILE
+from model_types.Menu import Menu
+from model_types.Dish import Dish
 from typing import Literal
 
 

@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 
 from data_access.Data import Data
 from model_types.Dish import Dish
@@ -71,3 +72,19 @@ async def list_dish():
                 "dishes": list_dish}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
+
+@router.options("/Dish")
+async def options_root():
+    allowed_methods = ["POST", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)
+
+@router.options("/Dish/{id}")
+async def options_root(id: int):
+    allowed_methods = ["GET","PUT","DELETE", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)

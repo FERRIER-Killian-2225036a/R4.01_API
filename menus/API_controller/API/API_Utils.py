@@ -1,6 +1,6 @@
 from fastapi import APIRouter,Request
-from menus.data_access.Data import Data
-from menus.core.config import AUTHOR, VERSION
+from data_access.Data import Data
+from core.config import AUTHOR, VERSION
 
 router = APIRouter()
 data_instance: Data | None = None

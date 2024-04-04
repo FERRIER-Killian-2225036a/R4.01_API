@@ -1,5 +1,5 @@
-from menus.data_access.CrudInterface import CrudInterface
-from menus.model_types.Menu import Menu
+from data_access.CrudInterface import CrudInterface
+from model_types.Menu import Menu
 
 
 class CrudMenus(CrudInterface):
