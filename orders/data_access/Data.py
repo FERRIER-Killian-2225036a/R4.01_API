@@ -28,6 +28,9 @@ class Data(metaclass=Singleton):
         if self.createData.tables_not_exist():
             self.createData.create_tables()
 
+        # Ajout d'un tuple pour test
+        self.create_value_for_test()
+
     def localisation_CRUD(self, method: str, object=None | Localisation, object_id=None | int) -> Localisation | None:
         """
         methodes du CRUD pour la table Localisation
@@ -280,3 +283,14 @@ class Data(metaclass=Singleton):
                     raise ValueError("Erreur lors suppression commande (id null)")
                 else:
                     return delete_order(object_id)
+
+    def create_value_for_test(self):
+        loc_data = {
+            "localisation_id": 1,
+            "address": 'Test',
+            "city": 'Aix',
+            "postal_code": 13100
+        }
+        order = Order(command_id=1, menus_id=[1, 2], user_id=1, localisation=loc_data, price=100.0,
+                      date="2022-04-01")
+        self.order_CRUD("CREATE", order)

@@ -12,7 +12,7 @@ def step_create_user(context):
 
 @then('User is created in the database')
 def step_user_created(context):
-    assert "user created with success" in context.response.json()["message"]
+    assert "User created successfully" in context.response.json()["message"]
 
 
 @when("We try to read a User")
@@ -22,7 +22,7 @@ def step_read_user(context):
 
 @then("User is retrieved from the database in the response")
 def step_user_readed(context):
-    assert "user readed with success" in context.response.json()["message"]
+    assert "User retrieved successfully" in context.response.json()["message"]
     assert context.response.json()["user"]["login"] == "test"
     assert context.response.json()["user"]["password"] == "NOT YOUR BUSINESS"
     assert context.response.json()["user"]["id"] == 1
@@ -43,7 +43,7 @@ def step_update_user(context):
 
 @then("User information is updated in the database")
 def step_user_updated(context):
-    assert "user updated with success" in context.response.json()["message"]
+    assert "User updated successfully" in context.response.json()["message"]
     context.response_temp = context.client.get("/User/1")
     assert context.response_temp.json()["user"]["login"] == "zozo"
     assert context.response_temp.json()["user"]["password"] == "NOT YOUR BUSINESS"
@@ -56,7 +56,7 @@ def step_delete_user(context):
 
 @then("User is removed from the database")
 def step_user_deleted(context):
-    assert "user deleted with success" in context.response.json()["message"]
+    assert "User deleted successfully" in context.response.json()["message"]
     context.response_temp = context.client.get("/User/1")
     assert "User not found" in context.response_temp.json()["detail"]
     assert context.response_temp.status_code == 412

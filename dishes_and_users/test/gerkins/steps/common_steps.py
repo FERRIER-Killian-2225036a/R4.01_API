@@ -17,9 +17,10 @@ def step_run_api(context):
         data.data_access.execute("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME IN ('DISH','USER');")
         data.data_access.commit()
 
-    controller = General_Controller(data)
+    controller = General_Controller(data, test=True)
     controller.setup_routes()
     controller.data_transmission()
+
     context.client = TestClient(controller.getApp())
 
 

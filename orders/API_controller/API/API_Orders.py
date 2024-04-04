@@ -2,6 +2,7 @@
 Fichier permettant la gestion des URL de la classe Order
 
 """
+from starlette.responses import JSONResponse
 
 from data_access.Data import Data
 from model_types.Order import Order
@@ -79,3 +80,19 @@ def delete_order(order_id: int):
         return {"message": "Commande supprimée avec succès"}
     except Exception as e:
         raise HTTPException(status_code=412, detail=str(e))
+
+@router.options("/order")
+async def options_root():
+    allowed_methods = ["POST", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)
+
+@router.options("/order/{id}")
+async def options_root(id: int):
+    allowed_methods = ["GET","PUT","DELETE", "OPTIONS"]
+    headers = {
+        "Allow": ", ".join(allowed_methods)
+    }
+    return JSONResponse(content=None, headers=headers)
