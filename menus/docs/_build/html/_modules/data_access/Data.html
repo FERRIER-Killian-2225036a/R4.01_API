@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_access.Data &mdash; Documentation Microservices Menu </title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d1a510d7"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=d99ca74e"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Microservices Menu
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">menus</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Microservices Menu</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Code du module</a></li>
+      <li class="breadcrumb-item active">data_access.Data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de data_access.Data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Data Access Module</span>
+<span class="sd">==================</span>
+
+<span class="sd">This module provides data access functionalities for the API.</span>
+
+<span class="sd">Dependencies:</span>
+<span class="sd">    - sqlite3: Standard SQLite3 database interface module.</span>
+<span class="sd">    - data_access.CrudImplementations.CrudMenus: CRUD operations implementation for Menu model.</span>
+<span class="sd">    - data_access.Singleton: Singleton metaclass for managing database connection.</span>
+<span class="sd">    - core.config: Configuration settings.</span>
+<span class="sd">    - model_types.Menu: Menu model.</span>
+<span class="sd">    - typing: Support for type hints.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">from</span> <span class="nn">data_access.CrudImplementations.CrudMenus</span> <span class="kn">import</span> <span class="n">CrudMenus</span>
+<span class="kn">from</span> <span class="nn">data_access.Singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">core.config</span> <span class="kn">import</span> <span class="n">SAVE_FILE</span>
+<span class="kn">from</span> <span class="nn">model_types.Menu</span> <span class="kn">import</span> <span class="n">Menu</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+
+
+<div class="viewcode-block" id="Data">
+<a class="viewcode-back" href="../../data_access.html#data_access.Data.Data">[docs]</a>
+<span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">Singleton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Singleton class for managing data access.</span>
+
+<span class="sd">    This class handles database connection and provides methods for CRUD operations.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        file_path (str): The file path for the SQLite database.</span>
+<span class="sd">        data_access (sqlite3.Connection): Connection to the SQLite database.</span>
+<span class="sd">        crud_menu (CrudMenus): CRUD operations implementation for Menu model.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">data_access</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span>
+    <span class="n">crud_menu</span><span class="p">:</span> <span class="n">CrudMenus</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="n">SAVE_FILE</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Data class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path (str): The file path for the SQLite database.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_access</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;file:&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                           <span class="n">detect_types</span><span class="o">=</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">PARSE_DECLTYPES</span><span class="p">,</span> <span class="n">check_same_thread</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">crud_menu</span> <span class="o">=</span> <span class="n">CrudMenus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_access</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables_exist</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Data.tables_exist">
+<a class="viewcode-back" href="../../data_access.html#data_access.Data.Data.tables_exist">[docs]</a>
+    <span class="k">def</span> <span class="nf">tables_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if tables exist in the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if tables exist, False otherwise.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_access</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT name FROM sqlite_master WHERE type=&#39;table&#39; AND name=&#39;MENU&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Data.create_tables">
+<a class="viewcode-back" href="../../data_access.html#data_access.Data.Data.create_tables">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates tables in the database if they do not exist.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If an error occurs during table creation.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">prepare_creation_tables</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_access</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;PRAGMA foreign_keys = ON&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">create_table_menu</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_access</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                    CREATE TABLE MENU (</span>
+<span class="sd">                        ID INTEGER PRIMARY KEY AUTOINCREMENT,</span>
+<span class="sd">                        utilisateur_id INTEGER UNIQUE NOT NULL,</span>
+<span class="sd">                        dishes TEXT UNIQUE NOT NULL,</span>
+<span class="sd">                        date_creation VARCHAR NOT NULL,</span>
+<span class="sd">                        date_modification VARCHAR NOT NULL</span>
+<span class="sd">                    );</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">prepare_creation_tables</span><span class="p">()</span>
+            <span class="n">create_table_menu</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Error during table creation: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Data.ORM">
+<a class="viewcode-back" href="../../data_access.html#data_access.Data.Data.ORM">[docs]</a>
+    <span class="k">def</span> <span class="nf">ORM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;CREATE&quot;</span><span class="p">,</span> <span class="s2">&quot;READ&quot;</span><span class="p">,</span> <span class="s2">&quot;UPDATE&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">],</span>
+            <span class="n">object_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;MENU&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">object_instance</span><span class="p">:</span> <span class="n">Menu</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">object_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes CRUD operations based on method and object type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            method (Literal[&quot;CREATE&quot;, &quot;READ&quot;, &quot;UPDATE&quot;, &quot;DELETE&quot;]): The CRUD method to execute.</span>
+<span class="sd">            object_type (Literal[&quot;MENU&quot;] | None): The type of object to operate on.</span>
+<span class="sd">            object_instance (Menu | None): The instance of the Menu model.</span>
+<span class="sd">            object_id (int | None): The ID of the object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Depends on the CRUD operation:</span>
+<span class="sd">                - For CREATE: The created object.</span>
+<span class="sd">                - For READ: The retrieved object.</span>
+<span class="sd">                - For UPDATE: The updated object.</span>
+<span class="sd">                - For DELETE: None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If method or object type is not allowed, or if parameters are missing or incorrect.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">object_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;MENU&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong type given&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">crud_function</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;crud_</span><span class="si">{</span><span class="n">object_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">match</span> <span class="n">method</span><span class="p">:</span>
+            <span class="k">case</span> <span class="s1">&#39;CREATE&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">object_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong object_instance parameters for method Create&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">crud_function</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">object_instance</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s1">&#39;READ&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">object_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No object_id parameters for method Read&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">crud_function</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">object_id</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s1">&#39;UPDATE&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">object_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">object_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;object_instance or/and object_id is wrong for method Update&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">crud_function</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">object_id</span><span class="p">,</span> <span class="n">object_instance</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">object_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No object_id parameters for method Delete&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">crud_function</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">object_id</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s1">&#39;LIST&#39;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">crud_function</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No tuples in this table&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Method not allowed&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Killian Ferrier.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
