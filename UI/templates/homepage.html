@@ -120,125 +120,486 @@
             cursor: pointer;
             margin-top: 20px;
         }
+
+        .modal2 {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content2 {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        .modal-content2 h2 {
+            margin-top: 0;
+        }
+        .modal-content2 label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .modal-content2 input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .modal-content2 button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Menu de Restaurant</h1>
         <nav>
-            <a href="#menu1">Menu 1</a>
-            <a href="#menu2">Menu 2</a>
+            <a href="#menu1">Menu </a>
             <a href="#plats">Plats</a>
         </nav>
     </header>
 
     <section id="plats">
-        <h2>Plats</h2>
-        <div class="menu-item plat1">
-            <img src="https://i.imgur.com/EXAMPLE1.jpg" alt="Plat 1">
-            <div class="menu-item-details">
-                <h3>Audran soupoudré de calamar</h3>
-                <p>Audran cuit pendant 45min à 240 degrés arrosé de calamar</p>
-                <p> 1€ symbolique</p>
-            </div>
-        </div>
-        <div class="menu-item plat2">
-            <img src="https://i.imgur.com/EXAMPLE1.jpg" alt="Plat 2">
-            <div class="menu-item-details">
-                <h3>Tom à la sauce du chef</h3>
-                <p>Tom dont son sac est fait</p>
-                <p>5.85€</p>
-            </div>
-        </div>
-        <div class="menu-item plat3">
-            <img src="https://i.imgur.com/EXAMPLE1.jpg" alt="Plat 3">
-            <div class="menu-item-details">
-                <h3>Killiane au féminin</h3>
-                <p>Le féminisme n'est pas que pour les femmes</p>
-                <p>8.98€</p>
-            </div>
-        </div>
-
-        <!-- <div class="menu-item plat2">
-            <img src="https://i.imgur.com/EXAMPLE2.jpg" alt="Plat 2">
-            <div class="menu-item-details">
-                <h3>Nom du Plat 2</h3>
-                <p>Description du Plat 2</p>
-            </div>
-        </div> -->
+        <!-- Cette section sera remplie dynamiquement avec les plats de l'API -->
     </section>
 
     <section class="menu-section" id="menu1">
-        <h2>Menu 1</h2>
-        <div class="menu">
-            <div class="menu-item menu1">
-                <div class="menu-item-details">
-                    <h3>Menu 1</h3>
-                    <p>Plat 1 + plat 2 + boisson / dessert</p>
-                    <p>Prix : $20</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="menu-section" id="menu2">
-        <h2>Menu 2</h2>
-        <div class="menu">
-            <div class="menu-item menu2">
-                <div class="menu-item-details">
-                    <h3>Menu 2</h3>
-                    <p> plat 1/2/3</p>
-                    <p>Prix : $25</p>
-                </div>
-            </div>
-        </div>
+        
     </section>
 
     <div class="button-container">
         <button id="create-menu-btn">Créer Menu</button>
-        <button>Commander</button>
+        <button id="order-menu-btn">Commander Menu</button>
     </div>
 
     <div id="modal" class="modal">
         <div class="modal-content">
             <h2>Sélectionnez les plats pour votre menu</h2>
             <div id="plates-list">
+                <!-- La liste des plats sera remplie dynamiquement ici -->
             </div>
             <button id="validate-btn">Valider</button>
-
+        </div>
+    </div>
+    <div id="modal2" class="modal2">
+        <div class="modal-content2"> <!-- Ajout de la classe modal-content2 -->
+            <h2>Sélectionnez les menus pour votre commande</h2>
+            <div id="plates-list2"> <!-- Changer l'ID en plates-list2 -->
+                <!-- La liste des plats sera remplie dynamiquement ici -->
+            </div>
+            <button id="validate-btn2">Valider</button> <!-- Changer l'ID en validate-btn2 -->
         </div>
     </div>
 
     <script>
-        const createMenuBtn = document.getElementById('create-menu-btn');
-        const modal = document.getElementById('modal');
-        const platesList = document.getElementById('plates-list');
-        const validateBtn = document.getElementById('validate-btn');
 
-        createMenuBtn.addEventListener('click', function() {
-            modal.style.display = 'block';
+        // Plats de test pour le modal 1
+const testPlates = [
+    {
+        "id": 1,
+        "description": "Nouilles",
+        "price": 10
+    },
+    {
+        "id": 2,
+        "description": "Ramen",
+        "price": 15
+    },
+    {
+        "id": 3,
+        "description": "Sushis",
+        "price": 20
+    }
+];
 
-            const plates = ['Audran soupoudré de calamar', 'Tom à la sauce du chef', 'Killiane au féminin'];
-            platesList.innerHTML = '';
-            plates.forEach(function(plate) {
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = plate;
-                const label = document.createElement('label');
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(plate));
-                platesList.appendChild(label);
+const testMenus = [
+    {
+        "id": 1,
+        "utilisateur_id": 0,
+        "dishes": [
+            {
+                "description": testPlates[0].description + " et " + testPlates[1].description,
+                "price": testPlates[0].price + testPlates[1].price
+            }
+        ],
+        "date_creation": "2024-04-04",
+        "date_modification": "2024-04-04"
+    },
+    {
+        "id": 2,
+        "utilisateur_id": 0,
+        "dishes": [
+            {
+                "description": testPlates[0].description + " et " + testPlates[2].description,
+                "price": testPlates[0].price + testPlates[2].price
+            }
+        ],
+        "date_creation": "2024-04-04",
+        "date_modification": "2024-04-04"
+    },
+    {
+        "id": 3,
+        "utilisateur_id": 0,
+        "dishes": [
+            {
+                "description": testPlates[1].description,
+                "price": testPlates[1].price
+            }
+        ],
+        "date_creation": "2024-04-04",
+        "date_modification": "2024-04-04"
+    }
+];
+// Sélectionne la section où les plats seront affichés
+const platsSection = document.getElementById('plats');
+
+// Parcours le tableau de plats de test (testPlates)
+testPlates.forEach(plate => {
+    // Crée un élément <div> pour chaque plat
+    const plateElement = document.createElement('div');
+    
+    // Ajoute une classe au <div> pour le styliser
+    plateElement.classList.add('plate-item');
+    
+    // Construit le contenu HTML avec le nom et le prix du plat
+    plateElement.innerHTML = `
+        <h3>${plate.description}</h3>
+        <p>Prix: ${plate.price} €</p>
+    `;
+    
+    // Ajoute le plat à la section des plats
+    platsSection.appendChild(plateElement);
+});
+const menu1Section = document.getElementById('menu1');
+testMenus.forEach(menu => {
+    const menuElement = document.createElement('div');
+    menuElement.className = 'menu-item';
+    menuElement.innerHTML = `
+        <h3>Menu ${menu.id}</h3>
+        <div class="menu-item-details">
+            ${menu.dishes.map(dish => `<p>${dish.description} - ${dish.price}$</p>`).join('')}
+            <p>Prix total : ${menu.dishes.reduce((total, dish) => total + dish.price, 0)}$</p>
+        </div>
+    `;
+    menu1Section.appendChild(menuElement);
+});
+
+// Code pour remplir le modal 1 avec les plats de test
+const platesList = document.getElementById('plates-list');
+testPlates.forEach(plate => {
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = plate.id;
+    const label = document.createElement('label');
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(plate.description));
+    platesList.appendChild(label);
+});
+
+// Code pour remplir le modal 2 avec les menus de test
+const platesList2 = document.getElementById('plates-list2');
+testMenus.forEach(menu => {
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = menu.id;
+    const label = document.createElement('label');
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode('Menu ' + menu.id));
+    platesList2.appendChild(label);
+});
+
+        // Récupère et affiche les plats depuis l'API lorsque la page est chargée
+        window.onload = function() {
+    fetch('http://localhost:8000/Dish/list/')
+        .then(response => response.json())
+        .then(data => {
+            const plates = data;
+            const platsSection = document.getElementById('plats');
+
+            // Vide la section des plats avant d'ajouter les nouveaux plats
+            platsSection.innerHTML = '';
+
+            // Ajoute chaque plat à la section des plats
+            plates.forEach(plate => {
+                const plateItem = document.createElement('div');
+                plateItem.className = 'menu-item';
+                plateItem.innerHTML = `
+                    <h3>${plate.description}</h3>
+                    <p>Prix : ${plate.price}$</p>
+                `;
+                platsSection.appendChild(plateItem);
             });
+        })
+        .catch(error => {
+            console.error('Error fetching plates:', error);
+        });
+};
+         // Fonction pour afficher la liste des trois plats dans le modal
+         function displayPlatesList(plates) {
+    plates.forEach(plate => {
+        console.log(plate.description);
+    });
+}
+
+        // Fonction pour créer une commande via la méthode POST
+        async function createOrder(orderData) {
+            try {
+                const response = await fetch('http://localhost:8000/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create order: ' + response.statusText);
+                }
+
+                const createdOrder = await response.json();
+                console.log('Order created successfully:', createdOrder);
+            } catch (error) {
+                console.error('Error creating order:', error.message);
+            }
+        }
+
+        // Ecouteur d'événements pour le bouton "Valider"
+        document.getElementById('validate-btn').addEventListener('click', function() {
+            const selectedPlate = document.querySelector('#plates-list input[type="checkbox"]:checked');
+            if (!selectedPlate) {
+                console.log('Veuillez sélectionner un plat pour passer la commande.');
+                return;
+            }
+
+            const orderData = {
+                "command_id": 2,
+                "menus_id": [0,1,2,3,4],
+                "user_id": 0,
+                "localisation": {
+                    "localisation_id": 0,
+                    "address": "Adresse",
+                    "city": "Ville",
+                    "postal_code": 12345
+                },
+                "price": 0,
+                "date": new Date().toISOString()
+            };
+
+            createOrder(orderData); // Effectue la requête pour créer la commande avec les données spécifiées
+
+            document.getElementById('modal').style.display = 'none'; // Masque le modal après validation
         });
 
-        validateBtn.addEventListener('click', function() {
-            const selectedPlates = Array.from(platesList.querySelectorAll('input[type="checkbox"]:checked')).map(function(checkbox) {
+
+        // Fonction pour créer une dish via la méthode POST
+        const dishData = {
+            "id": 0,
+            "description": "Nom du plat",
+            "price": 10 // Prix du plat en dollars
+        };
+        async function createDish(dishData) {
+            try {
+                const response = await fetch('http://localhost:8000/Dish', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dishData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error creating dish: ' + response.statusText);
+                }
+
+                const responseData = await response.json();
+                console.log('Dish created successfully:', responseData);
+            } catch (error) {
+                console.error('Error creating dish:', error.message);
+            }
+        }
+        createDish(dishData);
+        async function createMenu(menuData) {
+    try {
+        const response = await fetch('http://localhost:8000/Menu', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(menuData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la création du menu');
+        }
+
+        const createdMenu = await response.json();
+        console.log('Menu créé:', createdMenu);
+    } catch (error) {
+        console.error('Erreur lors de la création du menu:', error);
+    }
+}
+// Ecouteur d'événements pour le bouton "Créer Menu"
+document.getElementById('create-menu-btn').addEventListener('click', function() {
+    const selectedPlates = getSelectedPlates(); // Obtient les plats sélectionnés
+    const menuData = {
+        utilisateur_id: 0,
+        dishes: selectedPlates,
+        date_creation: new Date().toISOString(),
+        date_modification: new Date().toISOString()
+    };
+    createMenu(menuData); // Appelle la fonction pour créer le menu avec les données spécifiées
+});
+
+// Fonction pour obtenir les plats sélectionnés
+function getSelectedPlates() {
+    const selectedPlates = [];
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(checkbox => {
+        const plateId = parseInt(checkbox.value);
+        const plate = testPlates.find(plate => plate.id === plateId);
+        if (plate) {
+            selectedPlates.push({
+                description: plate.description,
+                price: plate.price
+            });
+        }
+    });
+    return selectedPlates;
+}
+
+// Exemple d'utilisation :
+const selectedPlates = getSelectedPlates();
+const menuData = {
+    utilisateur_id: 0,
+    dishes: selectedPlates,
+    date_creation: new Date().toISOString(),
+    date_modification: new Date().toISOString()
+};
+
+// Appel de la fonction pour créer le menu
+createMenu(menuData);
+
+        // Remplacer les trois plats prédéfinis par une liste de plats provenant de l'API
+        fetch('http://localhost:8000/Dish/list/')
+            .then(response => response.json())
+            .then(data => {
+                const plates = data;
+
+                // Supprimer les trois plats prédéfinis
+                document.querySelectorAll('.menu-item').forEach(item => item.remove());
+
+                // Créer les éléments HTML pour chaque plat et les ajouter à la section correspondante
+                plates.forEach(plate => {
+                    const sectionId = `#menu${plate.menu}`;
+                    const section = document.querySelector(sectionId);
+
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    menuItem.innerHTML = `
+                        <h3>Plats</h3>
+                        <div class="menu-item-details">
+                            <p>${plate.description}</p>
+                            <p>Prix : ${plate.price}</p>
+                        </div>
+                    `;
+                    section.appendChild(menuItem);
+                });
+                console.log('Plats récupérés:', plates);
+            })
+            .catch(error => {
+                console.error('Error fetching plates:', error);
+            });
+
+        const createMenuBtn = document.getElementById('create-menu-btn');
+        const ordermenubtn = document.getElementById('order-menu-btn');
+        const modal = document.getElementById('modal');
+        const modal2 = document.getElementById('modal2');
+        const validateBtn = document.getElementById('validate-btn');
+        const validateBtn2 = document.getElementById('validate-btn2'); // Ajout de l'élément validate-btn2
+
+        createMenuBtn.addEventListener('click', function () {
+            modal.style.display = 'block';
+
+            // Faire une requête GET à l'API pour récupérer la liste des plats
+            fetch('http://localhost:8000/Dish/list/')
+                .then(response => response.json())
+                .then(data => {
+                    const plates = data;
+
+                    // Afficher les plats dans le modal sous forme de cases à cocher
+                    platesList.innerHTML = '';
+                    plates.forEach(function (plate) {
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = plate.name;
+                        const label = document.createElement('label');
+                        label.appendChild(checkbox);
+                        label.appendChild(document.createTextNode(plate.name));
+                        platesList.appendChild(label);
+                    });
+                    console.log('Plats récupérés dans le modal:', plates);
+                })
+                .catch(error => {
+                    console.error('Error fetching plates:', error);
+                });
+        });
+        ordermenubtn.addEventListener('click', function () {
+            modal2.style.display = 'block'; // Changer modal par modal2
+
+            // Faire une requête GET à l'API pour récupérer la liste des plats
+            fetch('http://localhost:8000/Dish/list/')
+                .then(response => response.json())
+                .then(data => {
+                    const plates = data;
+
+                    // Afficher les plats dans le modal sous forme de cases à cocher
+                    platesList2.innerHTML = ''; // Changer platesList par platesList2
+                    plates.forEach(function (plate) {
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = plate.name;
+                        const label = document.createElement('label');
+                        label.appendChild(checkbox);
+                        label.appendChild(document.createTextNode(plate.name));
+                        platesList2.appendChild(label); // Changer platesList par platesList2
+                    });
+                    console.log('Plats récupérés dans le modal:', plates);
+                })
+                .catch(error => {
+                    console.error('Error fetching plates:', error);
+                });
+        });
+
+        validateBtn.addEventListener('click', function () {
+            const selectedPlates = Array.from(platesList.querySelectorAll('input[type="checkbox"]:checked')).map(function (checkbox) {
                 return checkbox.value;
             });
 
             console.log('Plats sélectionnés:', selectedPlates);
 
             modal.style.display = 'none';
+        });
+
+        validateBtn2.addEventListener('click', function () {
+            const selectedPlates = Array.from(platesList2.querySelectorAll('input[type="checkbox"]:checked')).map(function (checkbox) {
+                return checkbox.value;
+            });
+
+            console.log('Plats sélectionnés:', selectedPlates);
+
+            modal2.style.display = 'none'; // Changer modal par modal2
         });
     </script>
 </body>
